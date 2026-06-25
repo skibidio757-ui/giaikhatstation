@@ -3,7 +3,7 @@
 // 6 loại đồ uống chính với hình ảnh Unsplash thực tế
 // ============================================================
 
-const products = [
+const PRODUCTS = [
   {
     id: 1,
     name: 'Matcha Latte',
@@ -91,39 +91,3 @@ function renderStars(rating) {
   const empty = 5 - full - half;
   return '⭐'.repeat(full) + (half ? '✨' : '') + '☆'.repeat(empty);
 }
-// ============================================================
-// ĐOẠN CODE TỰ ĐỘNG HIỂN THỊ MÓN ĂN RA MÀN HÌNH
-// ============================================================
-document.addEventListener("DOMContentLoaded", () => {
-  // Tìm khu vực chứa thực đơn trên giao diện web của bạn
-  const productsContainer = document.getElementById("products-container") || document.querySelector(".products-grid") || document.querySelector("#products .row");
-  
-  if (productsContainer) {
-    productsContainer.innerHTML = ""; // Xóa thông báo trống cũ
-    
-    // Vòng lặp tự động bốc từng món nước ra vẽ hiệu ứng
-    products.forEach(product => {
-      const productHTML = `
-        <div class="product-card" style="border-top: 4px solid ${product.color || '#8BC34A'};" data-id="${product.id}">
-          <div class="product-image-wrapper">
-            <img src="${product.image}" alt="${product.name}" class="product-img">
-            ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
-          </div>
-          <div class="product-info">
-            <h3 class="product-title">${product.name}</h3>
-            <p class="product-desc">${product.shortDesc}</p>
-            <div class="product-meta">
-              <span class="product-rating">${renderStars(product.rating)} (${product.reviews})</span>
-              <span class="product-volume">${product.volume.split(' / ')[0]}</span>
-            </div>
-            <div class="product-footer">
-              <span class="product-price">${product.price.toLocaleString('vi-VN')} đ</span>
-              <button class="btn-add-cart" onclick="addToCart(${product.id})">Thêm món 🛒</button>
-            </div>
-          </div>
-        </div>
-      `;
-      productsContainer.insertAdjacentHTML("beforeend", productHTML);
-    });
-  }
-});
