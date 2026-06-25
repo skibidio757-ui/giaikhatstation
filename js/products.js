@@ -91,3 +91,30 @@ function renderStars(rating) {
   const empty = 5 - full - half;
   return '⭐'.repeat(full) + (half ? '✨' : '') + '☆'.repeat(empty);
 }
+// ============================================================
+// HÀM BỔ TRỢ ĐỊNH DẠNG (SỬA LỖI TRẮNG TRANG)
+// ============================================================
+
+// Hàm định dạng tiền tệ VND (Ví dụ: 45000 -> 45.000 đ)
+function fmtVND(amount) {
+  if (typeof amount !== 'number') return amount;
+  return amount.toLocaleString('vi-VN') + ' đ';
+}
+
+// Hàm bảo mật escape chống lỗi ký tự đặc biệt
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// Hàm tính giá tiền theo kích cỡ (Size S giữ nguyên, M +20%, L +40%)
+function calcPrice(basePrice, size) {
+  if (size === 'M') return basePrice * 1.2;
+  if (size === 'L') return basePrice * 1.4;
+  return basePrice;
+}
