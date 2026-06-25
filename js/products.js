@@ -3,7 +3,7 @@
 // 6 loại đồ uống chính với hình ảnh Unsplash thực tế
 // ============================================================
 
-const PRODUCTS = [
+const products = [
   {
     id: 1,
     name: 'Matcha Latte',
