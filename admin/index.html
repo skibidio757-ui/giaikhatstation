@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Giải Khát Station</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary:'#8BC34A', orange:'#FF9800' },
+          fontFamily: { sans:['Be Vietnam Pro','sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-[#0b1209] text-white min-h-screen">
+
+  <!-- Auth Guard -->
+  <div id="guard" class="fixed inset-0 bg-[#0b1209] z-50 flex items-center justify-center">
+    <div class="text-center">
+      <div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+      <p class="text-gray-400 text-sm">Kiểm tra quyền truy cập...</p>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div id="app" class="hidden flex min-h-screen">
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar sticky top-0 h-screen overflow-y-auto">
+      <div class="p-5 border-b border-white/07">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-orange flex items-center justify-center">
+            <i class="fas fa-leaf text-white text-sm"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="text-sm font-black">GIẢI KHÁT</div>
+            <div class="text-[9px] font-bold text-primary tracking-widest">ADMIN</div>
+          </div>
+        </div>
+      </div>
+      <nav class="p-3 space-y-1 flex-1">
+        <button onclick="tab('dashboard')" class="admin-nav-btn active" id="n-dashboard"><i class="fas fa-chart-bar w-4"></i> Dashboard</button>
+        <button onclick="tab('orders')"    class="admin-nav-btn" id="n-orders"><i class="fas fa-receipt w-4"></i> Đơn hàng
+          <span id="pending-badge" class="ml-auto bg-orange/20 text-orange text-[10px] px-1.5 py-0.5 rounded-full font-bold hidden"></span>
+        </button>
+        <button onclick="tab('users')"     class="admin-nav-btn" id="n-users"><i class="fas fa-users w-4"></i> Khách hàng</button>
+      </nav>
+      <div class="p-3 border-t border-white/07 space-y-1">
+        <a href="../index.html" class="admin-nav-btn"><i class="fas fa-home w-4"></i> Trang chủ</a>
+        <button onclick="auth.signOut().then(()=>location.href='../pages/login.html')" class="admin-nav-btn text-red-400 hover:text-red-300 hover:bg-red-500/10">
+          <i class="fas fa-sign-out-alt w-4"></i> Đăng xuất
+        </button>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <main class="flex-1 overflow-x-hidden">
+      <!-- Topbar -->
+      <div class="sticky top-0 z-30 bg-[rgba(11,18,9,0.85)] backdrop-blur-lg border-b border-white/07 px-6 py-4 flex items-center justify-between">
+        <h1 id="page-h" class="text-lg font-bold">Dashboard</h1>
+        <div class="text-xs text-gray-500" id="clock"></div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div id="t-dashboard" class="p-6 space-y-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="stat-box"><p class="text-gray-400 text-xs mb-1">Đơn hàng</p><p id="s-orders"  class="text-3xl font-black text-orange">–</p></div>
+          <div class="stat-box"><p class="text-gray-400 text-xs mb-1">Doanh thu</p><p id="s-revenue" class="text-3xl font-black text-primary">–</p></div>
+          <div class="stat-box"><p class="text-gray-400 text-xs mb-1">Chờ xử lý</p><p id="s-pending" class="text-3xl font-black text-yellow-400">–</p></div>
+          <div class="stat-box"><p class="text-gray-400 text-xs mb-1">Khách hàng</p><p id="s-users"  class="text-3xl font-black text-blue-400">–</p></div>
+        </div>
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="p-4 border-b border-white/08 flex justify-between items-center">
+            <h3 class="font-bold text-sm">Đơn hàng gần đây</h3>
+            <button onclick="tab('orders')" class="text-primary text-xs hover:underline">Xem tất cả</button>
+          </div>
+          <div id="recent-tbl" class="overflow-x-auto">
+            <div class="p-8 text-center text-gray-500 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i> Đang tải...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div id="t-orders" class="p-6 hidden">
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="p-4 border-b border-white/08 flex flex-wrap gap-3 justify-between items-center">
+            <h3 class="font-bold text-sm">Tất cả đơn hàng</h3>
+            <select id="o-filter" onchange="filterOrders(this.value)"
+              class="bg-white/05 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-gray-300 outline-none font-sans">
+              <option value="all">Tất cả</option>
+              <option value="pending">Chờ xác nhận</option>
+              <option value="confirmed">Đã xác nhận</option>
+              <option value="done">Hoàn thành</option>
+              <option value="cancelled">Đã hủy</option>
+            </select>
+          </div>
+          <div id="orders-tbl" class="overflow-x-auto">
+            <div class="p-8 text-center text-gray-500 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i> Đang tải...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USERS -->
+      <div id="t-users" class="p-6 hidden">
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="p-4 border-b border-white/08">
+            <h3 class="font-bold text-sm">Danh sách khách hàng</h3>
+          </div>
+          <div id="users-tbl" class="overflow-x-auto">
+            <div class="p-8 text-center text-gray-500 text-sm"><i class="fas fa-spinner fa-spin mr-2"></i> Đang tải...</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/toast.js"></script>
+
+  <script>
+    let allOrders = [], allUsers = [];
+
+    const TABS = { dashboard:'Dashboard', orders:'Đơn hàng', users:'Khách hàng' };
+    const ST = {
+      pending:   ['Chờ xác nhận','bs-pending'],
+      confirmed: ['Đã xác nhận', 'bs-confirmed'],
+      done:      ['Hoàn thành',  'bs-done'],
+      cancelled: ['Đã hủy',      'bs-cancelled'],
+    };
+
+    // ---- Auth Guard ----
+    auth.onAuthStateChanged(async u => {
+      if (!u) { location.href = '../pages/login.html'; return; }
+      try {
+        const doc = await db.collection('users').doc(u.uid).get();
+        const isAdmin = u.email === ADMIN_EMAIL || doc.data()?.role === 'admin';
+        if (!isAdmin) { toast.error('Không có quyền admin!'); setTimeout(() => location.href='../index.html', 1200); return; }
+      } catch { if (u.email !== ADMIN_EMAIL) { location.href='../index.html'; return; } }
+      document.getElementById('guard')?.classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      document.getElementById('app').classList.add('flex');
+      loadDashboard();
+      clockTick();
+    });
+
+    // ---- Clock ----
+    function clockTick() {
+      const el = document.getElementById('clock');
+      if (el) el.textContent = nowGMT7();
+      setTimeout(clockTick, 1000);
+    }
+
+    // ---- Tab ----
+    function tab(name) {
+      Object.keys(TABS).forEach(k => {
+        document.getElementById('t-'+k)?.classList.toggle('hidden', k !== name);
+        const n = document.getElementById('n-'+k);
+        if (n) n.classList.toggle('active', k === name);
+      });
+      document.getElementById('page-h').textContent = TABS[name] || name;
+      if (name === 'orders') loadOrders();
+      if (name === 'users')  loadUsers();
+    }
+
+    // ---- Load Dashboard ----
+    async function loadDashboard() {
+      const [oSnap, uSnap] = await Promise.all([
+        db.collection('orders').get(),
+        db.collection('users').get(),
+      ]);
+      allOrders = oSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+      allUsers  = uSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+      const rev     = allOrders.reduce((s, o) => s + (o.totalPrice || 0), 0);
+      const pending = allOrders.filter(o => o.status === 'pending').length;
+      document.getElementById('s-orders').textContent  = oSnap.size;
+      document.getElementById('s-revenue').textContent = fmtVND(rev);
+      document.getElementById('s-pending').textContent = pending;
+      document.getElementById('s-users').textContent   = uSnap.size;
+      const pb = document.getElementById('pending-badge');
+      if (pending > 0) { pb.textContent = pending; pb.classList.remove('hidden'); }
+      renderOrdersInto('recent-tbl', [...allOrders].reverse().slice(0, 5), true);
+    }
+
+    // ---- Load Orders ----
+    async function loadOrders() {
+      const snap = await db.collection('orders').orderBy('createdAt','desc').get();
+      allOrders  = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      renderOrdersInto('orders-tbl', allOrders);
+    }
+    function filterOrders(status) {
+      const list = status === 'all' ? allOrders : allOrders.filter(o => o.status === status);
+      renderOrdersInto('orders-tbl', list);
+    }
+
+    function renderOrdersInto(id, orders, mini = false) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!orders.length) { el.innerHTML = '<p class="p-8 text-center text-gray-500 text-sm">Không có đơn hàng.</p>'; return; }
+      el.innerHTML = `<table class="w-full text-xs">
+        <thead><tr class="border-b border-white/08 text-gray-400 text-left">
+          <th class="px-4 py-3 font-medium">Khách hàng</th>
+          <th class="px-4 py-3 font-medium">SĐT</th>
+          <th class="px-4 py-3 font-medium">Tổng tiền</th>
+          <th class="px-4 py-3 font-medium">Trạng thái</th>
+          <th class="px-4 py-3 font-medium">Thời gian</th>
+          ${!mini ? '<th class="px-4 py-3 font-medium">Cập nhật</th>' : ''}
+        </tr></thead>
+        <tbody>
+          ${orders.map(o => {
+            const [lbl, cls] = ST[o.status] || ['Không rõ','bs-pending'];
+            return `<tr class="border-b border-white/05 hover:bg-white/02">
+              <td class="px-4 py-3">
+                <div class="font-semibold text-white">${esc(o.customerName||'–')}</div>
+                <div class="text-gray-500">${esc(o.address||'')}</div>
+              </td>
+              <td class="px-4 py-3 text-gray-300">${esc(o.phoneNumber||'–')}</td>
+              <td class="px-4 py-3 font-bold text-orange">${fmtVND(o.totalPrice||0)}</td>
+              <td class="px-4 py-3"><span class="badge-status ${cls}">${lbl}</span></td>
+              <td class="px-4 py-3 text-gray-500">${esc(o.orderTime||'–')}</td>
+              ${!mini ? `<td class="px-4 py-3">
+                <select onchange="setStatus('${o.id}',this.value)"
+                  class="bg-white/05 border border-white/10 rounded-lg px-2 py-1 text-gray-300 outline-none font-sans text-xs">
+                  <option value="pending"   ${o.status==='pending'   ?'selected':''}>Chờ xác nhận</option>
+                  <option value="confirmed" ${o.status==='confirmed' ?'selected':''}>Đã xác nhận</option>
+                  <option value="done"      ${o.status==='done'      ?'selected':''}>Hoàn thành</option>
+                  <option value="cancelled" ${o.status==='cancelled' ?'selected':''}>Đã hủy</option>
+                </select>
+              </td>` : ''}
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+    }
+
+    async function setStatus(id, status) {
+      try {
+        await db.collection('orders').doc(id).update({ status });
+        const o = allOrders.find(x => x.id === id);
+        if (o) o.status = status;
+        toast.success('Đã cập nhật!');
+      } catch { toast.error('Lỗi cập nhật!'); }
+    }
+
+    // ---- Load Users ----
+    async function loadUsers() {
+      const snap = await db.collection('users').orderBy('createdAt','desc').get();
+      allUsers = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      const el = document.getElementById('users-tbl');
+      if (!el) return;
+      if (!allUsers.length) { el.innerHTML = '<p class="p-8 text-center text-gray-500 text-sm">Chưa có khách hàng.</p>'; return; }
+      el.innerHTML = `<table class="w-full text-xs">
+        <thead><tr class="border-b border-white/08 text-gray-400 text-left">
+          <th class="px-4 py-3 font-medium">Họ tên</th>
+          <th class="px-4 py-3 font-medium">Email</th>
+          <th class="px-4 py-3 font-medium">Đăng ký lúc</th>
+          <th class="px-4 py-3 font-medium">Đăng nhập gần nhất</th>
+        </tr></thead>
+        <tbody>
+          ${allUsers.map(u => `<tr class="border-b border-white/05 hover:bg-white/02">
+            <td class="px-4 py-3 font-semibold text-white">${esc(u.fullName||'–')}</td>
+            <td class="px-4 py-3 text-gray-400">${esc(u.email||'–')}</td>
+            <td class="px-4 py-3 text-gray-500">${esc(u.registerTime||'–')}</td>
+            <td class="px-4 py-3 text-gray-500">${esc(u.lastLogin||'–')}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+rules_version = '2';
+
+// ============================================================
+// FIRESTORE SECURITY RULES – Giải Khát Station
+// ============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- Hàm kiểm tra admin ----
+    function isAdmin() {
+      return request.auth != null &&
+        (request.auth.token.email == 'admin@giaikhat.vn' ||
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+
+    // ---- USERS ----
+    match /users/{uid} {
+      allow read:   if request.auth.uid == uid || isAdmin();
+      allow create: if request.auth.uid == uid
+                       && request.resource.data.fullName is string
+                       && request.resource.data.email is string;
+      allow update: if request.auth.uid == uid || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---- ORDERS ----
+    match /orders/{orderId} {
+      allow read:   if request.auth != null &&
+                      (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if request.auth != null
+                      && request.resource.data.customerName is string
+                      && request.resource.data.phoneNumber is string
+                      && request.resource.data.address is string
+                      && request.resource.data.totalPrice is number
+                      && request.resource.data.totalPrice > 0
+                      // Chống spam: mỗi field không được quá dài
+                      && request.resource.data.customerName.size() < 100
+                      && request.resource.data.address.size() < 300;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}

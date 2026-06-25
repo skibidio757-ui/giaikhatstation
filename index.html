@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giải Khát Station – Đồ Uống Ngon Giao Tận Nơi</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary:'#8BC34A', 'primary-lt':'#AED581', orange:'#FF9800', 'orange-lt':'#FFA726' },
+          fontFamily: { sans:['Be Vietnam Pro','sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-[#0b1209] text-white overflow-x-hidden">
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header id="navbar">
+  <nav class="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-orange flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+        <i class="fas fa-leaf text-white text-base"></i>
+      </div>
+      <div class="leading-tight">
+        <div class="text-base font-black text-white tracking-tight">GIẢI KHÁT</div>
+        <div class="text-[10px] font-bold text-primary tracking-widest uppercase">STATION</div>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-8">
+      <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
+      <li><a href="#products" class="nav-link">Sản Phẩm</a></li>
+      <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3">
+      <!-- Cart -->
+      <button onclick="openCart()" class="relative w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all group">
+        <i class="fas fa-shopping-cart text-white group-hover:text-primary transition-colors"></i>
+        <span id="cart-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 bg-orange rounded-full text-[11px] font-bold flex items-center justify-center text-white"></span>
+      </button>
+
+      <!-- Auth area -->
+      <div id="auth-area">
+        <a href="pages/login.html" class="btn-ghost hidden md:flex px-4 py-2 rounded-xl text-sm">
+          <i class="fas fa-user"></i> Đăng Nhập
+        </a>
+      </div>
+
+      <!-- Mobile menu toggle -->
+      <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 glass rounded-xl flex items-center justify-center">
+        <i class="fas fa-bars text-white"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10 px-4 py-4">
+    <ul class="space-y-3">
+      <li><a href="index.html" class="nav-link block py-2">Trang Chủ</a></li>
+      <li><a href="#products" class="nav-link block py-2" onclick="toggleMobileMenu()">Sản Phẩm</a></li>
+      <li><a href="#contact" class="nav-link block py-2" onclick="toggleMobileMenu()">Liên Hệ</a></li>
+      <li><a href="pages/login.html" class="btn-ghost inline-flex px-4 py-2 rounded-xl text-sm mt-1">
+        <i class="fas fa-user mr-2"></i> Đăng Nhập
+      </a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero-section relative">
+  <!-- Background orbs -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-12 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Text -->
+    <div>
+      <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium text-primary mb-6" data-aos="fade-down">
+        <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+        Giao hàng nhanh – 30 phút ⚡
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5" data-aos="fade-up" data-aos-delay="80">
+        Giải Khát<br/>
+        <span class="gradient-text">Tươi Ngon</span><br/>
+        Mỗi Ngày
+      </h1>
+      <p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-md" data-aos="fade-up" data-aos-delay="160">
+        Matcha, Cacao, Cà Phê, Nước Cam, Sữa Đậu & Sữa Tươi – <strong class="text-white">tươi mỗi ngày</strong>, giao tận cửa trong <strong class="text-primary">30 phút</strong>.
+      </p>
+      <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="240">
+        <a href="#products" class="btn-primary gap-2 px-8 py-4 rounded-2xl text-base shadow-lg">
+          <i class="fas fa-leaf"></i> Mua Ngay
+        </a>
+        <a href="#contact" class="btn-ghost gap-2 px-8 py-4 rounded-2xl text-base">
+          <i class="fas fa-phone"></i> Gọi Đặt Hàng
+        </a>
+      </div>
+      <!-- Stats -->
+      <div class="flex gap-8 mt-10" data-aos="fade-up" data-aos-delay="320">
+        <div><div class="text-2xl font-black text-primary">3K+</div><div class="text-xs text-gray-500 mt-0.5">Khách hàng</div></div>
+        <div class="w-px bg-white/10"></div>
+        <div><div class="text-2xl font-black text-primary">6</div><div class="text-xs text-gray-500 mt-0.5">Loại đồ uống</div></div>
+        <div class="w-px bg-white/10"></div>
+        <div><div class="text-2xl font-black text-primary">4.9★</div><div class="text-xs text-gray-500 mt-0.5">Đánh giá</div></div>
+      </div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="hero-img-wrap flex justify-center" data-aos="zoom-in" data-aos-delay="180">
+      <div class="hero-glow"></div>
+      <img
+        src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&h=600&fit=crop"
+        alt="Giải Khát Station"
+        class="hero-img relative z-10"
+        onerror="this.src='https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&h=600&fit=crop'"
+      />
+      <div class="float-badge badge-tr flex items-center gap-2">
+        <i class="fas fa-star text-orange text-sm"></i>
+        <span class="text-sm font-bold">4.9 / 5.0</span>
+      </div>
+      <div class="float-badge badge-bl flex items-center gap-2">
+        <i class="fas fa-clock text-primary text-sm"></i>
+        <span class="text-sm font-bold">30 phút</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCTS
+============================================================ -->
+<section id="products" class="py-24 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <h2 class="text-4xl md:text-5xl font-black mb-3">Thực Đơn <span class="gradient-text">Đồ Uống</span></h2>
+      <p class="text-gray-400">Tươi ngon, chế biến sạch mỗi ngày – không phẩm màu, không chất bảo quản</p>
+    </div>
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact" class="contact-section py-24 px-4 md:px-8">
+  <div class="max-w-lg mx-auto text-center">
+    <div data-aos="fade-up">
+      <h2 class="text-4xl md:text-5xl font-black mb-3">Liên <span class="gradient-text">Hệ</span></h2>
+      <p class="text-gray-400 mb-10">Gọi ngay để đặt hàng hoặc tư vấn thêm</p>
+    </div>
+
+    <div class="phone-card" data-aos="zoom-in" data-aos-delay="100">
+      <div class="w-20 h-20 mx-auto bg-gradient-to-br from-primary to-orange rounded-full flex items-center justify-center mb-6 shadow-lg" style="box-shadow:0 0 40px rgba(139,195,74,.4)">
+        <i class="fas fa-phone text-white text-3xl"></i>
+      </div>
+      <p class="text-gray-400 text-sm font-medium mb-2 tracking-wider uppercase">Hotline</p>
+      <a href="tel:0768152277" class="text-4xl md:text-5xl font-black gradient-text hover:opacity-80 transition-opacity">
+        0768 152 277
+      </a>
+      <p class="text-gray-500 text-sm mt-3">Phục vụ từ 6:00 – 22:00 hàng ngày</p>
+
+      <a href="tel:0768152277" class="btn-primary gap-3 px-10 py-4 rounded-2xl text-lg font-bold mt-8 inline-flex shadow-lg">
+        <i class="fas fa-phone-alt animate-pulse"></i> Gọi Ngay
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="py-8 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-orange flex items-center justify-center">
+        <i class="fas fa-leaf text-white text-sm"></i>
+      </div>
+      <div class="leading-tight">
+        <div class="text-sm font-black text-white">GIẢI KHÁT</div>
+        <div class="text-[9px] font-bold text-primary tracking-widest">STATION</div>
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm text-center">© 2026 Giải Khát Station. Đồ uống tươi ngon – Giao hàng nhanh – Phục vụ tận tâm.</p>
+    <p class="text-gray-600 text-sm"><a href="tel:0768152277" class="hover:text-primary transition-colors">0768 152 277</a></p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     CART SIDEBAR
+============================================================ -->
+<div id="cart-overlay" class="hidden" onclick="closeCart()"></div>
+<div id="cart-sidebar">
+  <div class="flex items-center justify-between p-5 border-b border-white/10">
+    <h2 class="text-lg font-bold flex items-center gap-2">
+      <i class="fas fa-shopping-cart text-primary"></i> Giỏ Hàng
+    </h2>
+    <button onclick="closeCart()" class="w-9 h-9 glass rounded-xl flex items-center justify-center hover:bg-red-500/20 transition-colors">
+      <i class="fas fa-times text-gray-400"></i>
+    </button>
+  </div>
+
+  <div id="cart-list" class="flex-1 overflow-y-auto p-4 space-y-3">
+    <div id="cart-empty" class="flex flex-col items-center justify-center py-16 gap-4 text-center">
+      <div class="w-16 h-16 glass rounded-full flex items-center justify-center">
+        <i class="fas fa-shopping-basket text-2xl text-gray-600"></i>
+      </div>
+      <div>
+        <p class="text-gray-400 font-medium">Giỏ hàng trống</p>
+        <p class="text-gray-600 text-sm mt-1">Thêm đồ uống vào giỏ nhé!</p>
+      </div>
+      <button onclick="closeCart()" class="btn-primary px-5 py-2.5 rounded-xl text-sm">Xem sản phẩm</button>
+    </div>
+  </div>
+
+  <div id="cart-footer" class="hidden border-t border-white/10 p-5 space-y-3">
+    <div class="flex justify-between items-center">
+      <span class="text-gray-400 font-medium">Tổng cộng:</span>
+      <span id="cart-total" class="text-2xl font-black text-orange"></span>
+    </div>
+    <button onclick="clearCart()" class="w-full py-2.5 rounded-xl border border-white/10 text-gray-500 text-sm hover:bg-white/5 transition-colors">
+      <i class="fas fa-trash mr-2"></i> Dọn sạch giỏ
+    </button>
+    <button onclick="openCheckout()" class="btn-orange w-full py-4 rounded-2xl text-base font-bold flex items-center justify-center gap-2">
+      <i class="fas fa-credit-card"></i> Đặt Hàng
+    </button>
+  </div>
+</div>
+
+<!-- ============================================================
+     PRODUCT DETAIL MODAL
+============================================================ -->
+<div id="product-modal" class="gk-modal-overlay">
+  <div class="gk-modal">
+    <div class="relative">
+      <img id="pm-img" src="" alt="" class="w-full h-52 object-cover rounded-t-3xl" />
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 w-9 h-9 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/70 transition-colors">
+        <i class="fas fa-times text-white text-sm"></i>
+      </button>
+    </div>
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-2">
+        <h2 id="pm-name" class="text-xl font-black"></h2>
+        <div id="pm-rating" class="text-sm text-yellow-400"></div>
+      </div>
+      <p id="pm-desc" class="text-gray-400 text-sm leading-relaxed mb-1"></p>
+      <p id="pm-ingredients" class="text-gray-500 text-xs mb-1"></p>
+      <p id="pm-volume" class="text-gray-500 text-xs mb-5"></p>
+
+      <!-- Size -->
+      <div class="mb-5">
+        <label class="gk-label mb-2 block">Chọn kích cỡ</label>
+        <div class="flex gap-2">
+          <button onclick="selectPMSize('S')" class="size-btn active" data-sz="S">S<br/><span class="text-[11px] font-normal text-gray-400">Gốc</span></button>
+          <button onclick="selectPMSize('M')" class="size-btn" data-sz="M">M<br/><span class="text-[11px] font-normal text-gray-400">+20%</span></button>
+          <button onclick="selectPMSize('L')" class="size-btn" data-sz="L">L<br/><span class="text-[11px] font-normal text-gray-400">+40%</span></button>
+        </div>
+      </div>
+
+      <!-- Qty & Price -->
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-3">
+          <button onclick="changePMQty(-1)" class="gk-qty-btn text-lg">−</button>
+          <span id="pm-qty" class="text-xl font-bold w-7 text-center">1</span>
+          <button onclick="changePMQty(1)"  class="gk-qty-btn text-lg">+</button>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-gray-400">Thành tiền</div>
+          <div id="pm-total" class="text-2xl font-black text-orange"></div>
+        </div>
+      </div>
+
+      <button onclick="addPMToCart()" class="btn-primary w-full py-4 rounded-2xl text-base font-bold flex items-center justify-center gap-2">
+        <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHECKOUT MODAL
+============================================================ -->
+<div id="checkout-modal" class="gk-modal-overlay">
+  <div class="gk-modal">
+    <div class="flex items-center justify-between p-5 border-b border-white/10">
+      <h2 class="text-lg font-bold flex items-center gap-2">
+        <i class="fas fa-receipt text-primary"></i> Xác Nhận Đơn Hàng
+      </h2>
+      <button onclick="closeCheckout()" class="w-9 h-9 glass rounded-xl flex items-center justify-center hover:bg-red-500/20">
+        <i class="fas fa-times text-gray-400"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="gk-label">Họ tên *</label>
+        <input id="co-name" type="text" class="gk-input" placeholder="Nguyễn Văn A" required />
+      </div>
+      <div>
+        <label class="gk-label">Số điện thoại *</label>
+        <input id="co-phone" type="tel" class="gk-input" placeholder="09xxxxxxxx" required />
+      </div>
+      <div>
+        <label class="gk-label">Địa chỉ giao hàng *</label>
+        <div class="relative">
+          <input id="co-address" type="text" class="gk-input pr-9" placeholder="123 Đường ABC, Quận 1, TP.HCM"
+            oninput="onAddressInput(this.value)" required />
+          <span id="addr-status" class="absolute right-3 top-1/2 -translate-y-1/2"></span>
+        </div>
+        <p id="addr-msg" class="text-xs mt-1"></p>
+      </div>
+
+      <!-- Summary -->
+      <div class="glass rounded-2xl p-4">
+        <p class="text-xs text-gray-400 font-semibold mb-2 uppercase tracking-wider">Đơn hàng</p>
+        <div id="co-summary" class="space-y-1 max-h-36 overflow-y-auto"></div>
+        <div class="border-t border-white/10 mt-3 pt-3 flex justify-between font-bold">
+          <span>Tổng tiền:</span>
+          <span id="co-total" class="text-orange text-lg"></span>
+        </div>
+      </div>
+
+      <button id="place-order-btn" onclick="placeOrder()"
+        class="btn-orange w-full py-4 rounded-2xl text-base font-bold flex items-center justify-center gap-2">
+        <i class="fas fa-check-circle"></i> Xác Nhận Đặt Hàng
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FIREBASE SDKs
+============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<!-- Config & Helpers -->
+<script src="js/config.js"></script>
+<!-- Toast -->
+<script src="js/toast.js"></script>
+<!-- Products -->
+<script src="js/products.js"></script>
+<!-- Cart -->
+<script src="js/cart.js"></script>
+
+<script>
+// ============================================================
+// INIT
+// ============================================================
+AOS.init({ duration:680, once:true, offset:60, easing:'ease-out-cubic' });
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,.4)' : '';
+});
+
+// Mobile menu
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu')?.classList.toggle('hidden');
+}
+
+// Smooth anchors
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+
+// ============================================================
+// RENDER PRODUCTS
+// ============================================================
+function renderProducts() {
+  const grid = document.getElementById('product-grid');
+  if (!grid) return;
+  grid.innerHTML = PRODUCTS.map((p, i) => `
+    <div class="product-card"
+         data-aos="fade-up"
+         data-aos-delay="${(i % 3) * 90}"
+         onclick="openProductModal(${p.id})">
+      <div class="overflow-hidden relative">
+        <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy"
+             onerror="this.src='https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&h=350&fit=crop'" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+      </div>
+      <div class="product-body relative z-10">
+        <span class="product-badge">${esc(p.badge)}</span>
+        <div class="product-name">${esc(p.name)}</div>
+        <div class="product-desc">${esc(p.shortDesc)}</div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">${fmtVND(p.price)}</div>
+            <div class="product-rating text-xs mt-0.5">
+              ★★★★★ <span class="text-gray-500">(${p.reviews})</span>
+            </div>
+          </div>
+          <button class="add-quick-btn" onclick="event.stopPropagation();quickAdd(${p.id})">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+  if (window.AOS) AOS.refresh();
+}
+
+// Quick add (S size, qty 1)
+function quickAdd(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (p) addToCart(p, 'S', 1);
+}
+
+// ============================================================
+// PRODUCT MODAL
+// ============================================================
+let pmProduct = null, pmSize = 'S', pmQty = 1;
+
+function openProductModal(id) {
+  pmProduct = PRODUCTS.find(p => p.id === id);
+  if (!pmProduct) return;
+  pmSize = 'S'; pmQty = 1;
+
+  document.getElementById('pm-img').src   = pmProduct.image;
+  document.getElementById('pm-name').textContent = pmProduct.name;
+  document.getElementById('pm-desc').textContent = pmProduct.longDesc;
+  document.getElementById('pm-ingredients').textContent = pmProduct.ingredients;
+  document.getElementById('pm-volume').textContent = '📏 ' + pmProduct.volume;
+  document.getElementById('pm-rating').textContent = '★'.repeat(Math.floor(pmProduct.rating)) + ` (${pmProduct.reviews})`;
+  document.getElementById('pm-qty').textContent = '1';
+
+  resetPMSizes();
+  updatePMPrice();
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductModal() {
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function selectPMSize(s) {
+  pmSize = s; resetPMSizes();
+  document.querySelector(`.size-btn[data-sz="${s}"]`)?.classList.add('active');
+  updatePMPrice();
+}
+
+function resetPMSizes() {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.size-btn[data-sz="${pmSize}"]`)?.classList.add('active');
+}
+
+function changePMQty(d) {
+  pmQty = Math.max(1, pmQty + d);
+  document.getElementById('pm-qty').textContent = pmQty;
+  updatePMPrice();
+}
+
+function updatePMPrice() {
+  if (!pmProduct) return;
+  const unit = calcPrice(pmProduct.price, pmSize);
+  document.getElementById('pm-total').textContent = fmtVND(unit * pmQty);
+}
+
+function addPMToCart() {
+  if (!pmProduct) return;
+  addToCart(pmProduct, pmSize, pmQty);
+  closeProductModal();
+}
+
+// Close modal on overlay click
+document.getElementById('product-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeProductModal();
+});
+document.getElementById('checkout-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeCheckout();
+});
+
+// ============================================================
+// AUTH STATE
+// ============================================================
+auth.onAuthStateChanged(user => {
+  const area = document.getElementById('auth-area');
+  if (!area) return;
+  if (user) {
+    const name = user.displayName || user.email.split('@')[0];
+    area.innerHTML = `
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-orange flex items-center justify-center text-xs font-bold text-white">
+          ${esc(name.charAt(0).toUpperCase())}
+        </div>
+        <span class="hidden md:block text-sm font-semibold max-w-[90px] truncate">${esc(name)}</span>
+        <button onclick="auth.signOut()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>`;
+  } else {
+    area.innerHTML = `
+      <a href="pages/login.html" class="btn-ghost hidden md:flex px-4 py-2 rounded-xl text-sm">
+        <i class="fas fa-user mr-2"></i> Đăng Nhập
+      </a>`;
+  }
+});
+
+// Run on load
+document.addEventListener('DOMContentLoaded', renderProducts);
+</script>
+</body>
+</html>

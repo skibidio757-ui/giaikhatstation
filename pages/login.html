@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng Nhập – Giải Khát Station</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary:'#8BC34A', 'primary-lt':'#AED581', orange:'#FF9800' },
+          fontFamily: { sans:['Be Vietnam Pro','sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-[#0b1209] text-white">
+
+  <!-- Back -->
+  <a href="../index.html" class="fixed top-5 left-5 z-50 btn-ghost px-3 py-2 rounded-xl text-sm">
+    <i class="fas fa-arrow-left mr-2"></i> Trang chủ
+  </a>
+
+  <div class="auth-bg">
+    <div class="auth-card">
+
+      <!-- Logo -->
+      <div class="flex justify-center mb-7">
+        <a href="../index.html" class="flex items-center gap-2">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-orange flex items-center justify-center shadow-lg">
+            <i class="fas fa-leaf text-white text-xl"></i>
+          </div>
+          <div class="leading-tight">
+            <div class="text-base font-black text-white">GIẢI KHÁT</div>
+            <div class="text-[10px] font-bold text-primary tracking-widest">STATION</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex bg-white/5 rounded-2xl p-1 mb-7">
+        <button id="tab-login"    onclick="switchTab('login')"
+          class="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all bg-gradient-to-r from-primary to-orange text-white">
+          Đăng Nhập
+        </button>
+        <button id="tab-register" onclick="switchTab('register')"
+          class="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all text-gray-400">
+          Đăng Ký
+        </button>
+      </div>
+
+      <!-- ======== ĐĂNG NHẬP ======== -->
+      <div id="form-login">
+        <h2 class="text-2xl font-black mb-1">Chào trở lại!</h2>
+        <p class="text-gray-500 text-sm mb-6">Đăng nhập để đặt đồ uống yêu thích.</p>
+
+        <form onsubmit="doLogin(event)" class="space-y-4">
+          <div>
+            <label class="gk-label">Email</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-envelope"></i></span>
+              <input id="l-email" type="email" class="gk-input pl-9" placeholder="email@gmail.com" autocomplete="email" required />
+            </div>
+            <p id="l-email-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <div>
+            <label class="gk-label">Mật khẩu</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-lock"></i></span>
+              <input id="l-pass" type="password" class="gk-input pl-9 pr-10" placeholder="Mật khẩu" autocomplete="current-password" required />
+              <button type="button" class="pass-toggle" onclick="togglePass('l-pass',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <p id="l-pass-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <button type="submit" id="login-btn" class="btn-primary w-full py-3.5 rounded-2xl text-sm font-bold gap-2 mt-1">
+            <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-500 mt-5">
+          Chưa có tài khoản?
+          <button onclick="switchTab('register')" class="text-primary font-semibold hover:underline">Đăng ký ngay</button>
+        </p>
+      </div>
+
+      <!-- ======== ĐĂNG KÝ ======== -->
+      <div id="form-register" class="hidden">
+        <h2 class="text-2xl font-black mb-1">Tạo tài khoản</h2>
+        <p class="text-gray-500 text-sm mb-6">Đăng ký để bắt đầu thưởng thức đồ uống ngon!</p>
+
+        <form onsubmit="doRegister(event)" class="space-y-3.5">
+          <div>
+            <label class="gk-label">Họ tên</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-user"></i></span>
+              <input id="r-name" type="text" class="gk-input pl-9" placeholder="Nguyễn Văn A" required />
+            </div>
+            <p id="r-name-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <div>
+            <label class="gk-label">Email</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-envelope"></i></span>
+              <input id="r-email" type="email" class="gk-input pl-9" placeholder="email@gmail.com" autocomplete="email" required />
+            </div>
+            <p id="r-email-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <div>
+            <label class="gk-label">Mật khẩu</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-lock"></i></span>
+              <input id="r-pass" type="password" class="gk-input pl-9 pr-10" placeholder="Tối thiểu 6 ký tự" autocomplete="new-password" required />
+              <button type="button" class="pass-toggle" onclick="togglePass('r-pass',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <p id="r-pass-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <div>
+            <label class="gk-label">Xác nhận mật khẩu</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"><i class="fas fa-lock"></i></span>
+              <input id="r-confirm" type="password" class="gk-input pl-9 pr-10" placeholder="Nhập lại mật khẩu" autocomplete="new-password" required />
+              <button type="button" class="pass-toggle" onclick="togglePass('r-confirm',this)"><i class="fas fa-eye"></i></button>
+            </div>
+            <p id="r-confirm-err" class="field-error hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+          </div>
+          <button type="submit" id="register-btn" class="btn-primary w-full py-3.5 rounded-2xl text-sm font-bold gap-2 mt-1">
+            <i class="fas fa-user-plus"></i> Đăng Ký
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-500 mt-5">
+          Đã có tài khoản?
+          <button onclick="switchTab('login')" class="text-primary font-semibold hover:underline">Đăng nhập</button>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/toast.js"></script>
+
+  <script>
+    // ---- Tab switch ----
+    function switchTab(tab) {
+      const isL = tab === 'login';
+      document.getElementById('form-login').classList.toggle('hidden', !isL);
+      document.getElementById('form-register').classList.toggle('hidden', isL);
+      ['tab-login','tab-register'].forEach(id => {
+        const btn = document.getElementById(id);
+        const active = (id === 'tab-'+tab);
+        btn.classList.toggle('bg-gradient-to-r', active);
+        btn.classList.toggle('from-primary',  active);
+        btn.classList.toggle('to-orange',     active);
+        btn.classList.toggle('text-white',    active);
+        btn.classList.toggle('text-gray-400', !active);
+      });
+    }
+
+    // ---- Toggle password ----
+    function togglePass(id, btn) {
+      const inp  = document.getElementById(id);
+      const icon = btn.querySelector('i');
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.classList.replace('fa-eye','fa-eye-slash');
+        btn.style.color = '#8BC34A';
+      } else {
+        inp.type = 'password';
+        icon.classList.replace('fa-eye-slash','fa-eye');
+        btn.style.color = '';
+      }
+    }
+
+    // ---- Error helpers ----
+    function showErr(id, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.querySelector('span').textContent = msg;
+      el.classList.remove('hidden');
+    }
+    function clearAllErrors() {
+      document.querySelectorAll('.field-error').forEach(el => el.classList.add('hidden'));
+    }
+
+    // ---- Firebase error messages ----
+    function fbErrVN(code) {
+      return ({
+        'auth/email-already-in-use':  'Email này đã được đăng ký.',
+        'auth/invalid-email':          'Email không hợp lệ.',
+        'auth/user-not-found':         'Tài khoản không tồn tại.',
+        'auth/wrong-password':         'Mật khẩu không đúng.',
+        'auth/invalid-credential':     'Email hoặc mật khẩu không đúng.',
+        'auth/weak-password':          'Mật khẩu quá yếu (tối thiểu 6 ký tự).',
+        'auth/too-many-requests':      'Quá nhiều lần thử. Thử lại sau.',
+        'auth/network-request-failed': 'Lỗi kết nối mạng.',
+      })[code] || 'Lỗi không xác định. Vui lòng thử lại.';
+    }
+
+    // ---- Login ----
+    async function doLogin(e) {
+      e.preventDefault();
+      clearAllErrors();
+      const email = document.getElementById('l-email').value.trim();
+      const pass  = document.getElementById('l-pass').value;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('l-email-err','Email không hợp lệ.'); return; }
+      if (pass.length < 6) { showErr('l-pass-err','Mật khẩu tối thiểu 6 ký tự.'); return; }
+
+      const btn = document.getElementById('login-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang đăng nhập...';
+
+      try {
+        const cred = await auth.signInWithEmailAndPassword(email, pass);
+        // Lưu loginTime GMT+7
+        await db.collection('users').doc(cred.user.uid).update({ lastLogin: nowGMT7() });
+        toast.success('Đăng nhập thành công!', 'Chào mừng trở lại!');
+        setTimeout(() => window.location.href = '../index.html', 1200);
+      } catch (err) {
+        showErr('l-email-err', fbErrVN(err.code));
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Đăng Nhập';
+      }
+    }
+
+    // ---- Register ----
+    async function doRegister(e) {
+      e.preventDefault();
+      clearAllErrors();
+      const name    = document.getElementById('r-name').value.trim();
+      const email   = document.getElementById('r-email').value.trim();
+      const pass    = document.getElementById('r-pass').value;
+      const confirm = document.getElementById('r-confirm').value;
+
+      let ok = true;
+      if (!name || name.length < 2) { showErr('r-name-err','Họ tên tối thiểu 2 ký tự.'); ok = false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('r-email-err','Email không hợp lệ.'); ok = false; }
+      if (pass.length < 6) { showErr('r-pass-err','Mật khẩu tối thiểu 6 ký tự.'); ok = false; }
+      if (pass !== confirm) { showErr('r-confirm-err','Mật khẩu xác nhận không khớp.'); ok = false; }
+      if (!ok) return;
+
+      const btn = document.getElementById('register-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang tạo tài khoản...';
+
+      try {
+        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+        await cred.user.updateProfile({ displayName: name });
+        const now = nowGMT7();
+        await db.collection('users').doc(cred.user.uid).set({
+          uid: cred.user.uid, fullName: name, email,
+          registerTime: now, lastLogin: now,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          role: 'user',
+        });
+        toast.success('Đăng ký thành công! 🎉', `Chào mừng ${name}!`);
+        setTimeout(() => window.location.href = '../index.html', 1400);
+      } catch (err) {
+        showErr('r-email-err', fbErrVN(err.code));
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Đăng Ký';
+      }
+    }
+
+    // Redirect if already logged in
+    auth.onAuthStateChanged(u => { if (u) window.location.href = '../index.html'; });
+  </script>
+</body>
+</html>
