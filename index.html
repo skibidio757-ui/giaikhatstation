@@ -5,16 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Giải Khát Station – Đồ Uống Ngon Giao Tận Nơi</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <!-- AOS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css" />
 
   <script>
@@ -30,16 +25,12 @@
 </head>
 <body class="font-sans bg-[#0b1209] text-white overflow-x-hidden">
 
-<!-- ============================================================
-     HEADER
-============================================================ -->
 <header id="navbar">
   <nav class="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
 
-    <!-- Logo -->
     <a href="index.html" class="flex items-center gap-2.5 group">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-orange flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-        <i class="fas fa-leaf text-white text-base"></i>
+      <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg group-hover:scale-110 transition-transform bg-[#0b1209]">
+        <img src="https://lh3.googleusercontent.com/d/1rVb69Yw2B0qFfI0g_t4XmKzG_uK7H2Xl" class="w-full h-full object-cover" alt="Logo">
       </div>
       <div class="leading-tight">
         <div class="text-base font-black text-white tracking-tight">GIẢI KHÁT</div>
@@ -47,36 +38,30 @@
       </div>
     </a>
 
-    <!-- Desktop Nav -->
     <ul class="hidden md:flex items-center gap-8">
       <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
       <li><a href="#products" class="nav-link">Sản Phẩm</a></li>
       <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
     </ul>
 
-    <!-- Actions -->
     <div class="flex items-center gap-3">
-      <!-- Cart -->
       <button onclick="openCart()" class="relative w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all group">
         <i class="fas fa-shopping-cart text-white group-hover:text-primary transition-colors"></i>
         <span id="cart-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 bg-orange rounded-full text-[11px] font-bold flex items-center justify-center text-white"></span>
       </button>
 
-      <!-- Auth area -->
       <div id="auth-area">
         <a href="pages/login.html" class="btn-ghost hidden md:flex px-4 py-2 rounded-xl text-sm">
           <i class="fas fa-user"></i> Đăng Nhập
         </a>
       </div>
 
-      <!-- Mobile menu toggle -->
       <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 glass rounded-xl flex items-center justify-center">
         <i class="fas fa-bars text-white"></i>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10 px-4 py-4">
     <ul class="space-y-3">
       <li><a href="index.html" class="nav-link block py-2">Trang Chủ</a></li>
@@ -89,18 +74,13 @@
   </div>
 </header>
 
-<!-- ============================================================
-     HERO
-============================================================ -->
 <section class="hero-section relative">
-  <!-- Background orbs -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
     <div class="hero-orb orb-1"></div>
     <div class="hero-orb orb-2"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-12 grid md:grid-cols-2 gap-12 items-center">
-    <!-- Text -->
     <div>
       <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium text-primary mb-6" data-aos="fade-down">
         <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
@@ -122,17 +102,15 @@
           <i class="fas fa-phone"></i> Gọi Đặt Hàng
         </a>
       </div>
-      <!-- Stats -->
       <div class="flex gap-8 mt-10" data-aos="fade-up" data-aos-delay="320">
         <div><div class="text-2xl font-black text-primary">3K+</div><div class="text-xs text-gray-500 mt-0.5">Khách hàng</div></div>
         <div class="w-px bg-white/10"></div>
         <div><div class="text-2xl font-black text-primary">6</div><div class="text-xs text-gray-500 mt-0.5">Loại đồ uống</div></div>
         <div class="w-px bg-white/10"></div>
-        <div><div class="text-2xl font-black text-primary">4.9★</div><div class="text-xs text-gray-500 mt-0.5">Đánh giá</div></div>
+        <div><div class="text-2xl font-black text-primary">THƠM NGON★</div><div class="text-xs text-gray-500 mt-0.5">Đánh giá</div></div>
       </div>
     </div>
 
-    <!-- Hero Image -->
     <div class="hero-img-wrap flex justify-center" data-aos="zoom-in" data-aos-delay="180">
       <div class="hero-glow"></div>
       <img
@@ -143,7 +121,7 @@
       />
       <div class="float-badge badge-tr flex items-center gap-2">
         <i class="fas fa-star text-orange text-sm"></i>
-        <span class="text-sm font-bold">4.9 / 5.0</span>
+        <span class="text-sm font-bold">TUYỆT VỜI</span>
       </div>
       <div class="float-badge badge-bl flex items-center gap-2">
         <i class="fas fa-clock text-primary text-sm"></i>
@@ -153,9 +131,6 @@
   </div>
 </section>
 
-<!-- ============================================================
-     PRODUCTS
-============================================================ -->
 <section id="products" class="py-24 px-4 md:px-8">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-14" data-aos="fade-up">
@@ -163,14 +138,10 @@
       <p class="text-gray-400">Tươi ngon, chế biến sạch mỗi ngày – không phẩm màu, không chất bảo quản</p>
     </div>
     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Rendered by JS -->
-    </div>
+      </div>
   </div>
 </section>
 
-<!-- ============================================================
-     CONTACT
-============================================================ -->
 <section id="contact" class="contact-section py-24 px-4 md:px-8">
   <div class="max-w-lg mx-auto text-center">
     <div data-aos="fade-up">
@@ -195,14 +166,11 @@
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-============================================================ -->
 <footer class="py-8 px-4 md:px-8">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
     <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-orange flex items-center justify-center">
-        <i class="fas fa-leaf text-white text-sm"></i>
+      <div class="w-8 h-8 rounded-lg overflow-hidden bg-[#0b1209]">
+        <img src="https://lh3.googleusercontent.com/d/1rVb69Yw2B0qFfI0g_t4XmKzG_uK7H2Xl" class="w-full h-full object-cover" alt="Logo">
       </div>
       <div class="leading-tight">
         <div class="text-sm font-black text-white">GIẢI KHÁT</div>
@@ -214,9 +182,6 @@
   </div>
 </footer>
 
-<!-- ============================================================
-     CART SIDEBAR
-============================================================ -->
 <div id="cart-overlay" class="hidden" onclick="closeCart()"></div>
 <div id="cart-sidebar">
   <div class="flex items-center justify-between p-5 border-b border-white/10">
@@ -255,9 +220,6 @@
   </div>
 </div>
 
-<!-- ============================================================
-     PRODUCT DETAIL MODAL
-============================================================ -->
 <div id="product-modal" class="gk-modal-overlay">
   <div class="gk-modal">
     <div class="relative">
@@ -275,7 +237,6 @@
       <p id="pm-ingredients" class="text-gray-500 text-xs mb-1"></p>
       <p id="pm-volume" class="text-gray-500 text-xs mb-5"></p>
 
-      <!-- Size -->
       <div class="mb-5">
         <label class="gk-label mb-2 block">Chọn kích cỡ</label>
         <div class="flex gap-2">
@@ -285,7 +246,6 @@
         </div>
       </div>
 
-      <!-- Qty & Price -->
       <div class="flex items-center justify-between mb-5">
         <div class="flex items-center gap-3">
           <button onclick="changePMQty(-1)" class="gk-qty-btn text-lg">−</button>
@@ -305,9 +265,6 @@
   </div>
 </div>
 
-<!-- ============================================================
-     CHECKOUT MODAL
-============================================================ -->
 <div id="checkout-modal" class="gk-modal-overlay">
   <div class="gk-modal">
     <div class="flex items-center justify-between p-5 border-b border-white/10">
@@ -337,7 +294,6 @@
         <p id="addr-msg" class="text-xs mt-1"></p>
       </div>
 
-      <!-- Summary -->
       <div class="glass rounded-2xl p-4">
         <p class="text-xs text-gray-400 font-semibold mb-2 uppercase tracking-wider">Đơn hàng</p>
         <div id="co-summary" class="space-y-1 max-h-36 overflow-y-auto"></div>
@@ -355,23 +311,15 @@
   </div>
 </div>
 
-<!-- ============================================================
-     FIREBASE SDKs
-============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-<!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<!-- Config & Helpers -->
 <script src="js/config.js"></script>
-<!-- Toast -->
 <script src="js/toast.js"></script>
-<!-- Products -->
 <script src="js/products.js"></script>
-<!-- Cart -->
 <script src="js/cart.js"></script>
 
 <script>
