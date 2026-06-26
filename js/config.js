@@ -1,13 +1,8 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyBuCLyl6W-mTp_P1NL-daoWqsVP0gWp4UI",
-  authDomain: "giaikhatstaton.firebaseapp.com",
-  projectId: "giaikhatstaton",
-  storageBucket: "giaikhatstaton.firebasestorage.app",
-  messagingSenderId: "292568980848",
-  appId: "1:292568980848:web:7a6fa596a321c5478943b5",
-  measurementId: "G-DG9LQLGZS0"
+  apiKey:            "AIzaSy...",        // ← thay bằng key thật
+  authDomain:        "ten-project.firebaseapp.com",
+  projectId:         "ten-project",
+  storageBucket:     "ten-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId:             "1:123:web:abc..."
 };
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
