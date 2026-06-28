@@ -516,7 +516,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
     <div class="p-6">
       <div class="flex justify-between items-start mb-2">
         <h2 id="pm-name" class="text-xl font-black"></h2>
-        <div id="pm-stars" class="text-sm" style="color:#fbbf24"></div>
+
       </div>
       <p id="pm-desc"  class="text-sm leading-relaxed mb-1" style="color:rgba(255,255,255,.55)"></p>
       <p id="pm-ingr"  class="text-xs mb-1" style="color:rgba(255,255,255,.4)"></p>
@@ -873,7 +873,6 @@ function renderProducts() {
         <div class="flex items-center justify-between">
           <div>
             <div class="font-black text-lg" style="color:#FF9800">${fmtVND(p.price)}</div>
-            <div class="text-xs mt-0.5" style="color:#fbbf24">${'★'.repeat(Math.floor(p.rating))} <span style="color:rgba(255,255,255,.35)">(${p.reviews})</span></div>
           </div>
           <button class="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
                   style="background:linear-gradient(135deg,#8BC34A,#FF9800)"
@@ -899,7 +898,6 @@ function openPM(id) {
   document.getElementById('pm-desc').textContent = pmP.long;
   document.getElementById('pm-ingr').textContent = pmP.ingr;
   document.getElementById('pm-vol').textContent  = '📏 ' + pmP.vol;
-  document.getElementById('pm-stars').textContent = '★'.repeat(Math.floor(pmP.rating))+` (${pmP.reviews})`;
   document.getElementById('pm-qty').textContent = '1';
   resetSz(); updPMPrice();
   document.getElementById('pm-ov').classList.add('open');
