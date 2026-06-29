@@ -526,9 +526,8 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
       <div class="mb-5">
         <label class="block text-xs font-semibold mb-2" style="color:rgba(255,255,255,.6)">Chọn kích cỡ</label>
         <div class="flex gap-2">
-          <button onclick="selSz('S')" class="sz-btn active" data-sz="S">S<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">Gốc</span></button>
-          <button onclick="selSz('M')" class="sz-btn" data-sz="M">M<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">+20%</span></button>
-          <button onclick="selSz('L')" class="sz-btn" data-sz="L">L<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">+40%</span></button>
+          <button onclick="selSz('M')" class="sz-btn active" data-sz="M">M<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">500ml</span></button>
+          <button onclick="selSz('L')" class="sz-btn" data-sz="L">L<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">700ml</span></button>
         </div>
       </div>
 
@@ -733,6 +732,7 @@ const firebaseConfig = {
   appId: "1:292568980848:web:7a6fa596a321c5478943b5",
   measurementId: "G-DG9LQLGZS0"
 };
+
 /* -------- Khởi tạo Firebase -------- */
 let auth, db, FB_OK = false;
 try {
@@ -821,37 +821,37 @@ const PRODUCTS = [
   {id:1,name:'Matcha Latte',short:'Matcha Nhật Bản cao cấp, béo ngậy, thanh mát.',
    long:'Matcha latte từ bột matcha Nhật Bản grade premium, pha cùng sữa tươi Anchor theo tỷ lệ vàng. Hương thơm nhẹ đắng đặc trưng, dịu ngọt tự nhiên.',
    ingr:'🍵 Bột matcha Nhật Bản, sữa tươi, đường mía, đá viên',
-   vol:'250ml / 350ml / 450ml',price:45000,
+   vol:'M – 500ml  |  L – 700ml',price:45000,
    img:'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=500&h=350&fit=crop',
    rating:4.9,reviews:328,badge:'Bán chạy'},
   {id:2,name:'Cacao Nóng',short:'Cacao nguyên chất đậm đà, thêm kem tươi phủ trên.',
    long:'Cacao 100% nhập từ Ivory Coast, kết hợp sữa nguyên kem và vanilla. Lớp whipping cream phủ trên cùng tạo cảm giác béo ngậy ấm lòng.',
    ingr:'🍫 Bột cacao 100%, sữa nguyên kem, vanilla, whipping cream',
-   vol:'250ml / 350ml / 450ml',price:42000,
+   vol:'M – 500ml  |  L – 700ml',price:42000,
    img:'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=500&h=350&fit=crop',
    rating:4.8,reviews:215,badge:'Mới'},
   {id:3,name:'Cà Phê Sữa Đá',short:'Phin truyền thống, sữa đặc Ông Thọ, đá trong.',
    long:'Robusta Buôn Ma Thuột + Arabica Cầu Đất pha phin tỷ lệ độc quyền. Sữa đặc Ông Thọ nguyên bản, đá viên trong suốt – đúng chuẩn cà phê Việt.',
    ingr:'☕ Robusta + Arabica, sữa đặc, đá viên',
-   vol:'250ml / 350ml / 450ml',price:35000,
+   vol:'M – 500ml  |  L – 700ml',price:35000,
    img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&h=350&fit=crop',
    rating:4.7,reviews:512,badge:'Phổ biến'},
   {id:4,name:'Nước Cam Tươi',short:'Cam Sành Vĩnh Long vắt tươi 100%, không đường.',
    long:'Cam Sành miền Tây vắt ngay tại chỗ, không pha loãng, không đường, không bảo quản. Một ly đủ vitamin C cho cả ngày – thuần tự nhiên.',
    ingr:'🍊 Cam Sành tươi 100%, không đường, không bảo quản',
-   vol:'250ml / 350ml / 450ml',price:38000,
+   vol:'M – 500ml  |  L – 700ml',price:38000,
    img:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=500&h=350&fit=crop',
    rating:4.9,reviews:401,badge:'Tươi 100%'},
   {id:5,name:'Sữa Đậu Nành',short:'Đậu nành rang vàng, xay mịn, thơm bùi béo ngậy.',
    long:'Đậu nành hạt vàng ngâm đêm, rang vàng nhẹ trước khi xay – kỹ thuật rang tạo hương thơm bùi đặc biệt. Không bảo quản, đường phèn vừa phải.',
    ingr:'🫘 Đậu nành hạt, đường phèn, nước lọc',
-   vol:'250ml / 350ml / 450ml',price:28000,
+   vol:'M – 500ml  |  L – 700ml',price:28000,
    img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&h=350&fit=crop',
    rating:4.6,reviews:187,badge:'Lành mạnh'},
   {id:6,name:'Sữa Tươi Nguyên Chất',short:'Vinamilk nguyên chất, giàu canxi, phục vụ lạnh/nóng.',
    long:'Sữa tươi thanh trùng Vinamilk 100%, không pha loãng. Phục vụ lạnh hoặc nóng theo yêu cầu. Nguồn canxi và protein thiết yếu cho cả gia đình.',
    ingr:'🥛 Sữa tươi Vinamilk 100%',
-   vol:'250ml / 350ml / 450ml',price:30000,
+   vol:'M – 500ml  |  L – 700ml',price:30000,
    img:'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&h=350&fit=crop',
    rating:4.7,reviews:263,badge:'Dinh dưỡng'},
 ];
@@ -892,7 +892,7 @@ let pmP=null, pmSz='S', pmQty=1;
 
 function openPM(id) {
   pmP = PRODUCTS.find(x=>x.id===id); if(!pmP) return;
-  pmSz='S'; pmQty=1;
+  pmSz='M'; pmQty=1;
   document.getElementById('pm-img').src   = pmP.img;
   document.getElementById('pm-name').textContent = pmP.name;
   document.getElementById('pm-desc').textContent = pmP.long;
@@ -907,10 +907,15 @@ function closePM() { document.getElementById('pm-ov').classList.remove('open'); 
 function selSz(s) { pmSz=s; resetSz(); document.querySelector(`.sz-btn[data-sz="${s}"]`).classList.add('active'); updPMPrice(); }
 function resetSz() { document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active')); }
 function changePQ(d) { pmQty=Math.max(1,pmQty+d); document.getElementById('pm-qty').textContent=pmQty; updPMPrice(); }
-function calcPrice(base,sz) { return sz==='M'?Math.round(base*1.2):sz==='L'?Math.round(base*1.4):base; }
-function updPMPrice() { if(!pmP) return; document.getElementById('pm-price').textContent=fmtVND(calcPrice(pmP.price,pmSz)*pmQty); }
+function calcPrice(base,sz,pid) {
+  // Sữa Đậu Nành (id=5): M=10000đ, L=15000đ
+  if(pid===5) return sz==='M' ? 10000 : 15000;
+  // Tất cả còn lại: M=20000đ, L=25000đ
+  return sz==='M' ? 20000 : 25000;
+}
+function updPMPrice() { if(!pmP) return; document.getElementById('pm-price').textContent=fmtVND(calcPrice(pmP.price,pmSz,pmP.id)*pmQty); }
 function addPMToCart() { if(!pmP) return; addToCart(pmP,pmSz,pmQty); closePM(); }
-function quickAdd(id) { const p=PRODUCTS.find(x=>x.id===id); if(p) addToCart(p,'S',1); }
+function quickAdd(id) { const p=PRODUCTS.find(x=>x.id===id); if(p) addToCart(p,'M',1); }
 
 /* ==============================================================
    CART
@@ -927,7 +932,7 @@ function updBadge() {
   b.textContent=n; b.style.display=n>0?'flex':'none';
 }
 function addToCart(p,sz,qty=1) {
-  const up=calcPrice(p.price,sz);
+  const up=calcPrice(p.price,sz,p.id);
   const ex=cart.find(i=>i.id===p.id&&i.size===sz);
   if(ex) ex.qty+=qty; else cart.push({id:p.id,name:p.name,img:p.img,size:sz,up,qty});
   saveCart();
