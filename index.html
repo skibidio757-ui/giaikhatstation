@@ -583,15 +583,33 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
         </div>
       </div>
 
-      <!-- Name + Send -->
-      <div class="px-5 pt-4 pb-2 border-t" style="border-color:rgba(255,255,255,.06)">
-        <input id="fb-name" type="text" class="fb-name-input mb-2"
-               placeholder="✏️ Tên của bạn (bắt buộc)" maxlength="40"/>
+      <!-- User info bar -->
+      <div id="fb-user-bar" class="px-5 pt-4 pb-2 border-t" style="border-color:rgba(255,255,255,.06)">
+        <!-- Đã đăng nhập -->
+        <div id="fb-logged-in" class="hidden flex items-center gap-2.5">
+          <div id="fb-avatar" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0"
+               style="background:linear-gradient(135deg,#8BC34A,#FF9800)"></div>
+          <div>
+            <div class="text-xs font-bold" id="fb-display-name" style="color:#8BC34A"></div>
+            <div class="text-xs" style="color:rgba(255,255,255,.35)">Đang gửi với tài khoản này</div>
+          </div>
+        </div>
+        <!-- Chưa đăng nhập -->
+        <div id="fb-need-login" class="hidden flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-lock text-sm" style="color:rgba(255,255,255,.35)"></i>
+            <span class="text-xs" style="color:rgba(255,255,255,.45)">Đăng nhập để gửi phản hồi</span>
+          </div>
+          <button onclick="openAuth('login')" class="text-xs font-bold px-3 py-1.5 rounded-lg"
+                  style="background:linear-gradient(135deg,#8BC34A,#FF9800);color:#fff;border:none;cursor:pointer">
+            Đăng Nhập
+          </button>
+        </div>
       </div>
       <div class="fb-input-wrap">
         <textarea id="fb-text" class="fb-textarea" rows="1"
-                  placeholder="Nhập cảm nhận của bạn... 💬"
-                  maxlength="300"
+                  placeholder="Đăng nhập để gửi phản hồi..."
+                  maxlength="300" disabled
                   onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFeedback()}"></textarea>
         <button id="fb-send" class="fb-send-btn" onclick="sendFeedback()">
           <i class="fas fa-paper-plane text-white"></i>
@@ -915,23 +933,13 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
    5. Tạo Firestore Database
 ================================================================ */
 const firebaseConfig = {
-
-  apiKey: "AIzaSyBuCLyl6W-mTp_P1ML-daoWqsVP0gWP4UI",
-
-  authDomain: "giaikhatstaton.firebaseapp.com",
-
-  projectId: "giaikhatstaton",
-
-  storageBucket: "giaikhatstaton.firebasestorage.app",
-
-  messagingSenderId: "292568980848",
-
-  appId: "1:292568980848:web:7a6fa596a321c5478943b5",
-
-  measurementId: "G-DG9LQLGZS0"
-
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId:             "YOUR_APP_ID"
 };
-
 
 /* -------- Khởi tạo Firebase -------- */
 let auth, db, FB_OK = false;
@@ -1367,25 +1375,53 @@ async function doRegister() {
 if(auth) {
   auth.onAuthStateChanged(user=>{
     const area=document.getElementById('auth-area');
-    if(!area) return;
+    if(area){
+      if(user){
+        const nm=user.displayName||user.email.split('@')[0];
+        area.innerHTML=`
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                 style="background:linear-gradient(135deg,#8BC34A,#FF9800)">${esc(nm.charAt(0).toUpperCase())}</div>
+            <span class="hidden md:block text-sm font-semibold max-w-[90px] truncate">${esc(nm)}</span>
+            <button onclick="auth.signOut().then(()=>toast.info('Đã đăng xuất','Hẹn gặp lại!'))"
+                    style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.8rem;padding:4px"
+                    class="hidden md:block hover:text-red-400 transition-colors">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>`;
+      } else {
+        area.innerHTML=`
+          <button onclick="openAuth('login')" class="btn-ghost px-4 py-2 rounded-xl text-sm hidden md:flex">
+            <i class="fas fa-user mr-2"></i> Đăng Nhập
+          </button>`;
+      }
+    }
+
+    // ── Cập nhật UI feedback ──
+    const loggedIn  = document.getElementById('fb-logged-in');
+    const needLogin = document.getElementById('fb-need-login');
+    const fbText    = document.getElementById('fb-text');
+    const fbSend    = document.getElementById('fb-send');
+    const fbName    = document.getElementById('fb-display-name');
+    const fbAvatar  = document.getElementById('fb-avatar');
+
     if(user){
-      const nm=user.displayName||user.email.split('@')[0];
-      area.innerHTML=`
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-               style="background:linear-gradient(135deg,#8BC34A,#FF9800)">${esc(nm.charAt(0).toUpperCase())}</div>
-          <span class="hidden md:block text-sm font-semibold max-w-[90px] truncate">${esc(nm)}</span>
-          <button onclick="auth.signOut().then(()=>toast.info('Đã đăng xuất','Hẹn gặp lại!'))"
-                  style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.8rem;padding:4px"
-                  class="hidden md:block hover:text-red-400 transition-colors">
-            <i class="fas fa-sign-out-alt"></i>
-          </button>
-        </div>`;
+      const nm = user.displayName || user.email.split('@')[0];
+      if(loggedIn)  { loggedIn.classList.remove('hidden'); loggedIn.classList.add('flex'); }
+      if(needLogin) { needLogin.classList.add('hidden'); needLogin.classList.remove('flex'); }
+      if(fbName)    fbName.textContent = nm;
+      if(fbAvatar)  fbAvatar.textContent = nm.charAt(0).toUpperCase();
+      if(fbText)    { fbText.disabled = false; fbText.placeholder = 'Nhập cảm nhận của bạn... 💬'; }
+      if(fbSend)    fbSend.disabled = false;
+      // Load feedbacks khi đã đăng nhập
+      loadFeedbacks();
     } else {
-      area.innerHTML=`
-        <button onclick="openAuth('login')" class="btn-ghost px-4 py-2 rounded-xl text-sm hidden md:flex">
-          <i class="fas fa-user mr-2"></i> Đăng Nhập
-        </button>`;
+      if(loggedIn)  { loggedIn.classList.add('hidden'); loggedIn.classList.remove('flex'); }
+      if(needLogin) { needLogin.classList.remove('hidden'); needLogin.classList.add('flex'); }
+      if(fbText)    { fbText.disabled = true; fbText.placeholder = 'Đăng nhập để gửi phản hồi...'; }
+      if(fbSend)    fbSend.disabled = true;
+      // Vẫn load feedbacks để xem (read = public)
+      loadFeedbacks();
     }
   });
 }
@@ -1469,15 +1505,22 @@ function createBubble(name, text, time) {
 // Gửi feedback
 async function sendFeedback() {
   if (!FB_OK) { toast.error('Firebase chưa cấu hình!'); return; }
-  const nameEl = document.getElementById('fb-name');
   const textEl = document.getElementById('fb-text');
   const btnEl  = document.getElementById('fb-send');
-  if (!nameEl || !textEl) return;
+  if (!textEl) return;
 
-  const name = nameEl.value.trim();
+  // Bắt buộc đăng nhập
+  if (!auth?.currentUser) {
+    toast.warning('Vui lòng đăng nhập!', 'Bạn cần đăng nhập để gửi phản hồi.');
+    openAuth('login');
+    return;
+  }
+
+  // Lấy tên từ tài khoản đăng nhập
+  const u    = auth.currentUser;
+  const name = u.displayName || u.email.split('@')[0];
   const text = textEl.value.trim();
 
-  if (!name) { toast.warning('Vui lòng nhập tên!', 'Tên không được để trống.'); nameEl.focus(); return; }
   if (!text) { toast.warning('Chưa có nội dung!', 'Nhập cảm nhận của bạn nhé.'); textEl.focus(); return; }
   if (text.length < 3) { toast.warning('Quá ngắn!', 'Nhập ít nhất 3 ký tự.'); return; }
 
@@ -1520,7 +1563,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   // Load feedbacks sau khi FB_OK được set
-  setTimeout(() => { if (FB_OK) loadFeedbacks(); }, 800);
+  // loadFeedbacks được gọi trong onAuthStateChanged
 });
 
 </script>
