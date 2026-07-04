@@ -276,123 +276,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
 .tab-inactive{background:none;color:rgba(255,255,255,.5)}
 .tab-active{background:linear-gradient(135deg,#8BC34A,#FF9800);color:#fff}
 
-/* ======================================================
-   FEEDBACK SECTION
-====================================================== */
-#feedback {
-  background:
-    radial-gradient(ellipse at 30% 50%, rgba(139,195,74,.07) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, rgba(255,152,0,.06) 0%, transparent 45%);
-}
 
-/* Chat bubble area */
-.fb-chat-wrap {
-  height: 380px;
-  overflow-y: auto;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  scroll-behavior: smooth;
-}
-.fb-chat-wrap::-webkit-scrollbar { width: 4px; }
-.fb-chat-wrap::-webkit-scrollbar-thumb { background: rgba(139,195,74,.3); border-radius: 4px; }
-
-/* Mỗi feedback bubble */
-.fb-bubble {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  animation: fbIn .4s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes fbIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-.fb-bubble-inner {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 18px 18px 18px 4px;
-  padding: 12px 16px;
-  max-width: 85%;
-  position: relative;
-}
-.fb-bubble-inner::before {
-  content: '';
-  position: absolute;
-  bottom: -1px; left: -1px;
-  width: 14px; height: 14px;
-  background: rgba(255,255,255,.06);
-  border-left: 1px solid rgba(255,255,255,.1);
-  border-bottom: 1px solid rgba(255,255,255,.1);
-  border-radius: 0 0 0 10px;
-  clip-path: polygon(0 0, 100% 100%, 0 100%);
-}
-.fb-name  { font-weight: 700; font-size: .82rem; color: #8BC34A; margin-bottom: 3px; }
-.fb-text  { font-size: .88rem; color: rgba(255,255,255,.85); line-height: 1.55; }
-.fb-time  { font-size: .7rem; color: rgba(255,255,255,.3); margin-left: 4px; }
-
-/* Input area */
-.fb-input-wrap {
-  border-top: 1px solid rgba(255,255,255,.08);
-  padding: 1rem 1.25rem;
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  background: rgba(0,0,0,.15);
-}
-.fb-textarea {
-  flex: 1;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 14px;
-  color: #fff;
-  font-size: .9rem;
-  padding: .65rem 1rem;
-  outline: none;
-  resize: none;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  min-height: 44px; max-height: 120px;
-  transition: border-color .2s;
-  line-height: 1.5;
-}
-.fb-textarea::placeholder { color: rgba(255,255,255,.3); }
-.fb-textarea:focus { border-color: #8BC34A; box-shadow: 0 0 0 3px rgba(139,195,74,.12); }
-
-.fb-send-btn {
-  width: 44px; height: 44px;
-  border-radius: 13px;
-  background: linear-gradient(135deg, #8BC34A, #FF9800);
-  border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all .25s;
-  font-size: 1rem;
-}
-.fb-send-btn:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(139,195,74,.4); }
-.fb-send-btn:active { transform: scale(.95); }
-.fb-send-btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-
-/* Emoji + Name input */
-.fb-name-input {
-  width: 100%;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 12px;
-  color: #fff;
-  font-size: .88rem;
-  padding: .6rem .9rem;
-  outline: none;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  transition: border-color .2s;
-}
-.fb-name-input::placeholder { color: rgba(255,255,255,.3); }
-.fb-name-input:focus { border-color: #8BC34A; }
-
-/* Empty state */
-.fb-empty {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  height: 100%; gap: 10px; opacity: .45;
-}
 
 </style>
 </head>
@@ -422,7 +306,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
     <ul class="hidden md:flex items-center gap-8">
       <li><a href="#home" class="nav-link active">Trang Chủ</a></li>
       <li><a href="#products" class="nav-link">Sản Phẩm</a></li>
-      <li><a href="#feedback" class="nav-link">Phản Hồi</a></li>
+      <li><a href="giaikhatstationfeedback.html" class="nav-link" target="_blank">Phản Hồi 💬</a></li>
       <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
     </ul>
 
@@ -451,7 +335,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
     <div class="space-y-3">
       <a href="#home"     class="nav-link block py-2" onclick="toggleMob()">Trang Chủ</a>
       <a href="#products" class="nav-link block py-2" onclick="toggleMob()">Sản Phẩm</a>
-      <a href="#feedback" class="nav-link block py-2" onclick="toggleMob()">Phản Hồi</a>
+      <a href="giaikhatstationfeedback.html" class="nav-link block py-2" target="_blank" onclick="toggleMob()">Phản Hồi 💬</a>
       <a href="#contact"  class="nav-link block py-2" onclick="toggleMob()">Liên Hệ</a>
       <button onclick="openAuth('login');toggleMob()" class="btn-ghost px-4 py-2 rounded-xl text-sm flex">
         <i class="fas fa-user mr-2"></i> Đăng Nhập
@@ -537,90 +421,60 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overf
 </section>
 
 <!-- ============================================================
-     FEEDBACK SECTION
+     FEEDBACK CTA SECTION
 ============================================================ -->
-<section id="feedback" class="py-24 px-4 md:px-8">
-  <div class="max-w-2xl mx-auto">
+<section class="py-20 px-4 md:px-8">
+  <div class="max-w-2xl mx-auto" data-aos="zoom-in">
+    <div class="relative overflow-hidden rounded-3xl p-8 md:p-12 text-center"
+         style="background:linear-gradient(135deg,rgba(139,195,74,.12) 0%,rgba(255,152,0,.1) 100%);border:1px solid rgba(139,195,74,.2);box-shadow:0 0 80px rgba(139,195,74,.08)">
 
-    <!-- Header -->
-    <div class="text-center mb-10" data-aos="fade-up">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-4 glass"
-           style="color:#8BC34A;border-color:rgba(139,195,74,.25)">
-        <i class="fas fa-comments" style="color:#8BC34A"></i>
-        Ý kiến khách hàng
-      </div>
-      <h2 class="text-4xl md:text-5xl font-black mb-3">Phản <span class="gradient-text">Hồi</span></h2>
-      <p style="color:rgba(255,255,255,.5)">Chia sẻ cảm nhận của bạn về Giải Khát Station 🍵</p>
-    </div>
+      <!-- Orbs trang trí -->
+      <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(139,195,74,.08);filter:blur(60px);top:-60px;right:-40px;pointer-events:none"></div>
+      <div style="position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,152,0,.06);filter:blur(50px);bottom:-40px;left:-30px;pointer-events:none"></div>
 
-    <!-- Chat Box -->
-    <div class="rounded-3xl overflow-hidden" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);box-shadow:0 20px 60px rgba(0,0,0,.3)" data-aos="fade-up" data-aos-delay="100">
+      <!-- Icon -->
+      <div class="relative z-10">
+        <div class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-6 shadow-lg"
+             style="background:linear-gradient(135deg,#8BC34A,#FF9800);box-shadow:0 0 40px rgba(139,195,74,.35)">
+          <i class="fas fa-comments text-white text-3xl"></i>
+        </div>
 
-      <!-- Box Header -->
-      <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color:rgba(255,255,255,.08);background:rgba(0,0,0,.2)">
-        <div class="flex items-center gap-3">
-          <div class="flex gap-1.5">
-            <div class="w-3 h-3 rounded-full" style="background:#ff5f57"></div>
-            <div class="w-3 h-3 rounded-full" style="background:#febc2e"></div>
-            <div class="w-3 h-3 rounded-full" style="background:#28c840"></div>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-3">
+          Chia Sẻ <span class="gradient-text">Cảm Nhận</span>
+        </h2>
+        <p class="mb-8 text-base leading-relaxed" style="color:rgba(255,255,255,.55)">
+          Bạn đã thử đồ uống của chúng tôi chưa?<br/>
+          Hãy để lại phản hồi – chúng tôi luôn lắng nghe! 💚
+        </p>
+
+        <!-- Nút bấm chính -->
+        <a href="giaikhatstationfeedback.html" target="_blank"
+           class="btn-g inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-lg font-black shadow-lg"
+           style="box-shadow:0 12px 40px rgba(139,195,74,.4)">
+          <i class="fas fa-comment-dots"></i>
+          Gửi Phản Hồi Ngay
+          <i class="fas fa-arrow-right text-sm"></i>
+        </a>
+
+        <!-- Badges nhỏ -->
+        <div class="flex items-center justify-center gap-6 mt-8 flex-wrap">
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-shield-alt" style="color:#8BC34A"></i>
+            Hoàn toàn ẩn danh
           </div>
-          <span class="text-sm font-semibold" style="color:rgba(255,255,255,.6)">
-            <i class="fas fa-leaf mr-1.5" style="color:#8BC34A"></i>
-            Giải Khát Station – Góc Trò Chuyện
-          </span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <div class="w-2 h-2 rounded-full animate-pulse" style="background:#8BC34A"></div>
-          <span class="text-xs" style="color:#8BC34A">Live</span>
-        </div>
-      </div>
-
-      <!-- Messages -->
-      <div id="fb-chat" class="fb-chat-wrap">
-        <div id="fb-empty" class="fb-empty">
-          <i class="fas fa-comment-dots text-4xl" style="color:rgba(255,255,255,.2)"></i>
-          <p class="text-sm" style="color:rgba(255,255,255,.35)">Chưa có phản hồi nào.<br/>Hãy là người đầu tiên! 🎉</p>
-        </div>
-      </div>
-
-      <!-- User info bar -->
-      <div id="fb-user-bar" class="px-5 pt-4 pb-2 border-t" style="border-color:rgba(255,255,255,.06)">
-        <!-- Đã đăng nhập -->
-        <div id="fb-logged-in" class="hidden flex items-center gap-2.5">
-          <div id="fb-avatar" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white flex-shrink-0"
-               style="background:linear-gradient(135deg,#8BC34A,#FF9800)"></div>
-          <div>
-            <div class="text-xs font-bold" id="fb-display-name" style="color:#8BC34A"></div>
-            <div class="text-xs" style="color:rgba(255,255,255,.35)">Đang gửi với tài khoản này</div>
+          <div class="w-1 h-1 rounded-full" style="background:rgba(255,255,255,.2)"></div>
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-bolt" style="color:#FF9800"></i>
+            Gửi trong 10 giây
+          </div>
+          <div class="w-1 h-1 rounded-full" style="background:rgba(255,255,255,.2)"></div>
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-heart" style="color:#8BC34A"></i>
+            Chúng tôi trân trọng
           </div>
         </div>
-        <!-- Chưa đăng nhập -->
-        <div id="fb-need-login" class="hidden flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-lock text-sm" style="color:rgba(255,255,255,.35)"></i>
-            <span class="text-xs" style="color:rgba(255,255,255,.45)">Đăng nhập để gửi phản hồi</span>
-          </div>
-          <button onclick="openAuth('login')" class="text-xs font-bold px-3 py-1.5 rounded-lg"
-                  style="background:linear-gradient(135deg,#8BC34A,#FF9800);color:#fff;border:none;cursor:pointer">
-            Đăng Nhập
-          </button>
-        </div>
-      </div>
-      <div class="fb-input-wrap">
-        <textarea id="fb-text" class="fb-textarea" rows="1"
-                  placeholder="Đăng nhập để gửi phản hồi..."
-                  maxlength="300" disabled
-                  onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendFeedback()}"></textarea>
-        <button id="fb-send" class="fb-send-btn" onclick="sendFeedback()">
-          <i class="fas fa-paper-plane text-white"></i>
-        </button>
-      </div>
-      <div class="px-5 pb-4 flex justify-between items-center">
-        <span id="fb-char" class="text-xs" style="color:rgba(255,255,255,.25)">0 / 300</span>
-        <span class="text-xs" style="color:rgba(255,255,255,.2)">Enter để gửi · Shift+Enter xuống dòng</span>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -949,6 +803,7 @@ const firebaseConfig = {
   measurementId: "G-DG9LQLGZS0"
 
 };
+
 
 /* -------- Khởi tạo Firebase -------- */
 let auth, db, FB_OK = false;
@@ -1406,32 +1261,7 @@ if(auth) {
       }
     }
 
-    // ── Cập nhật UI feedback ──
-    const loggedIn  = document.getElementById('fb-logged-in');
-    const needLogin = document.getElementById('fb-need-login');
-    const fbText    = document.getElementById('fb-text');
-    const fbSend    = document.getElementById('fb-send');
-    const fbName    = document.getElementById('fb-display-name');
-    const fbAvatar  = document.getElementById('fb-avatar');
-
-    if(user){
-      const nm = user.displayName || user.email.split('@')[0];
-      if(loggedIn)  { loggedIn.classList.remove('hidden'); loggedIn.classList.add('flex'); }
-      if(needLogin) { needLogin.classList.add('hidden'); needLogin.classList.remove('flex'); }
-      if(fbName)    fbName.textContent = nm;
-      if(fbAvatar)  fbAvatar.textContent = nm.charAt(0).toUpperCase();
-      if(fbText)    { fbText.disabled = false; fbText.placeholder = 'Nhập cảm nhận của bạn... 💬'; }
-      if(fbSend)    fbSend.disabled = false;
-      // Load feedbacks khi đã đăng nhập
-      loadFeedbacks();
     } else {
-      if(loggedIn)  { loggedIn.classList.add('hidden'); loggedIn.classList.remove('flex'); }
-      if(needLogin) { needLogin.classList.remove('hidden'); needLogin.classList.add('flex'); }
-      if(fbText)    { fbText.disabled = true; fbText.placeholder = 'Đăng nhập để gửi phản hồi...'; }
-      if(fbSend)    fbSend.disabled = true;
-      // Vẫn load feedbacks để xem (read = public)
-      loadFeedbacks();
-    }
   });
 }
 
@@ -1461,23 +1291,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
    FEEDBACK SYSTEM – Lưu vào Firestore collection "feedbacks"
 ================================================================ */
 
-// Load feedbacks khi trang mở
-function loadFeedbacks() {
-  if (!FB_OK || !db) return;
-  db.collection('feedbacks')
-    .orderBy('createdAt', 'asc')
-    .onSnapshot(snap => {
-      const chatEl = document.getElementById('fb-chat');
-      const emptyEl = document.getElementById('fb-empty');
-      if (!chatEl) return;
-
-      // Xóa bubble cũ (giữ empty state)
-      chatEl.querySelectorAll('.fb-bubble').forEach(el => el.remove());
-
-      if (snap.empty) {
-        if (emptyEl) emptyEl.style.display = 'flex';
-        return;
-      }
       if (emptyEl) emptyEl.style.display = 'none';
 
       snap.forEach(doc => {
@@ -1491,15 +1304,6 @@ function loadFeedbacks() {
     });
 }
 
-// Tạo bubble HTML
-function createBubble(name, text, time) {
-  const div = document.createElement('div');
-  div.className = 'fb-bubble';
-  div.innerHTML = `
-    <div class="flex items-end gap-2">
-      <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-           style="background:linear-gradient(135deg,#8BC34A,#FF9800);color:#fff">
-        ${esc(name.charAt(0).toUpperCase())}
       </div>
       <div class="fb-bubble-inner">
         <div class="fb-name">${esc(name)}</div>
@@ -1511,9 +1315,6 @@ function createBubble(name, text, time) {
   return div;
 }
 
-// Gửi feedback
-async function sendFeedback() {
-  if (!FB_OK) { toast.error('Firebase chưa cấu hình!'); return; }
   const textEl = document.getElementById('fb-text');
   const btnEl  = document.getElementById('fb-send');
   if (!textEl) return;
@@ -1572,7 +1373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   // Load feedbacks sau khi FB_OK được set
-  // loadFeedbacks được gọi trong onAuthStateChanged
+
 });
 
 </script>
