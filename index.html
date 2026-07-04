@@ -1376,4 +1376,1382 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+</script><!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Giải Khát Station</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- AOS Animation -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+<style>
+/* ======================================================
+   BIẾN MÀU
+====================================================== */
+:root{
+  --green:#8BC34A; --green2:#AED581;
+  --orange:#FF9800; --orange2:#FFA726;
+  --bg:#0b1209; --glass:rgba(255,255,255,.06);
+  --glass-b:rgba(255,255,255,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Be Vietnam Pro',sans-serif;background:#0b1209;color:#fff;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#0b1209}
+::-webkit-scrollbar-thumb{background:#8BC34A;border-radius:3px}
+
+/* ======================================================
+   TIỆN ÍCH
+====================================================== */
+.gradient-text{
+  background:linear-gradient(135deg,#8BC34A,#FF9800);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.glass{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.11)}
+.btn-g{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#8BC34A,#FF9800);
+  color:#fff;font-weight:700;border:none;cursor:pointer;
+  transition:all .3s;text-decoration:none;position:relative;overflow:hidden;
+  font-family:'Be Vietnam Pro',sans-serif;
+}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(139,195,74,.4)}
+.btn-g:active{transform:translateY(0)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.8);font-weight:600;cursor:pointer;
+  transition:all .25s;text-decoration:none;font-family:'Be Vietnam Pro',sans-serif;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.13);color:#fff}
+
+/* ======================================================
+   NAVBAR
+====================================================== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:rgba(11,18,9,.72);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid rgba(255,255,255,.07);transition:box-shadow .3s
+}
+.nav-link{
+  color:rgba(255,255,255,.7);font-weight:500;font-size:.92rem;
+  text-decoration:none;transition:color .2s;position:relative
+}
+.nav-link::after{
+  content:'';position:absolute;bottom:-5px;left:0;right:0;
+  height:2px;background:#8BC34A;transform:scaleX(0);transition:transform .3s
+}
+.nav-link:hover,.nav-link.active{color:#fff}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
+
+/* ======================================================
+   HERO
+====================================================== */
+.hero-bg{
+  min-height:100vh;display:flex;align-items:center;
+  background:
+    radial-gradient(ellipse at 65% 45%,rgba(139,195,74,.14) 0%,transparent 55%),
+    radial-gradient(ellipse at 25% 70%,rgba(255,152,0,.10) 0%,transparent 50%),
+    #0b1209;
+  overflow:hidden;padding-top:80px
+}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);animation:orbF 9s ease-in-out infinite;pointer-events:none}
+@keyframes orbF{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
+.hero-img{
+  width:300px;height:300px;object-fit:cover;border-radius:50%;
+  box-shadow:0 40px 80px rgba(139,195,74,.3),0 0 0 4px rgba(139,195,74,.2);
+  animation:imgF 5s ease-in-out infinite;position:relative;z-index:5
+}
+@media(min-width:768px){.hero-img{width:400px;height:400px}}
+@keyframes imgF{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.hero-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,195,74,.18) 0%,transparent 65%);
+  animation:glowP 4s ease-in-out infinite
+}
+@keyframes glowP{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+.fl-badge{
+  position:absolute;z-index:10;
+  background:rgba(11,18,9,.75);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;
+  padding:8px 14px;font-size:.8rem;font-weight:600;
+  animation:imgF 5s ease-in-out infinite
+}
+
+/* ======================================================
+   PRODUCT CARD
+====================================================== */
+.prod-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:1.5rem;overflow:hidden;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);cursor:pointer;position:relative
+}
+.prod-card:hover{
+  transform:translateY(-8px) scale(1.025);
+  border-color:rgba(139,195,74,.4);
+  box-shadow:0 24px 60px rgba(139,195,74,.18)
+}
+.prod-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
+  opacity:0;transition:opacity .4s;z-index:1;pointer-events:none
+}
+.prod-card:hover::before{opacity:1}
+.prod-card::after{
+  content:'';position:absolute;top:-50%;left:-60%;
+  width:35%;height:200%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+  transform:skewX(-20deg);transition:left .6s;z-index:2;pointer-events:none
+}
+.prod-card:hover::after{left:120%}
+.prod-img{width:100%;height:200px;object-fit:cover;transition:transform .45s}
+.prod-card:hover .prod-img{transform:scale(1.08)}
+
+/* ======================================================
+   MODAL
+====================================================== */
+.modal-ov{
+  position:fixed;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(12px);
+  z-index:980;display:none;align-items:center;justify-content:center;padding:1rem
+}
+.modal-ov.open{display:flex}
+.modal-box{
+  background:rgba(15,24,12,.96);border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  animation:mIn .35s cubic-bezier(.34,1.56,.64,1)
+}
+@keyframes mIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* ======================================================
+   SIZE BUTTON
+====================================================== */
+.sz-btn{
+  flex:1;padding:.6rem;border-radius:12px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);
+  font-size:.85rem;font-weight:600;cursor:pointer;
+  transition:all .25s;font-family:'Be Vietnam Pro',sans-serif;text-align:center
+}
+.sz-btn:hover{border-color:#8BC34A;color:#fff}
+.sz-btn.active{border-color:#8BC34A;background:rgba(139,195,74,.18);color:#fff}
+
+/* ======================================================
+   CART SIDEBAR
+====================================================== */
+#cart-side{
+  position:fixed;top:0;right:0;height:100%;width:100%;max-width:400px;
+  background:#0f180c;z-index:950;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  border-left:1px solid rgba(255,255,255,.08)
+}
+#cart-side.open{transform:translateX(0)}
+#cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:940}
+
+/* ======================================================
+   FORM INPUT
+====================================================== */
+.gk-in{
+  width:100%;padding:.75rem 1rem;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;color:#fff;font-size:.9rem;outline:none;
+  transition:all .22s;font-family:'Be Vietnam Pro',sans-serif
+}
+.gk-in::placeholder{color:rgba(255,255,255,.3)}
+.gk-in:focus{border-color:#8BC34A;box-shadow:0 0 0 3px rgba(139,195,74,.15)}
+.gk-in.ok{border-color:#4ade80}
+.gk-in.err{border-color:#f87171}
+
+/* ======================================================
+   AUTH MODAL
+====================================================== */
+#auth-ov{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(16px);
+  z-index:990;display:none;align-items:center;justify-content:center;padding:1rem
+}
+#auth-ov.open{display:flex}
+.auth-box{
+  background:rgba(15,24,12,.97);border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;width:100%;max-width:420px;padding:2rem 1.75rem;
+  position:relative;overflow:hidden;animation:mIn .35s cubic-bezier(.34,1.56,.64,1)
+}
+
+/* ======================================================
+   CONTACT
+====================================================== */
+#contact{
+  background:radial-gradient(ellipse at 50% 0%,rgba(139,195,74,.08) 0%,transparent 60%)
+}
+.phone-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(139,195,74,.2);
+  border-radius:2rem;padding:3rem 2rem;text-align:center;
+  box-shadow:0 0 60px rgba(139,195,74,.08)
+}
+
+/* ======================================================
+   QTY BUTTON
+====================================================== */
+.qty-btn{
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+  color:#fff;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;font-family:'Be Vietnam Pro',sans-serif
+}
+.qty-btn:hover{background:rgba(139,195,74,.25)}
+
+/* ======================================================
+   PASSWORD TOGGLE
+====================================================== */
+.eye-btn{
+  position:absolute;right:.85rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;
+  font-size:.95rem;padding:4px;transition:color .2s
+}
+.eye-btn:hover{color:rgba(255,255,255,.8)}
+
+/* ======================================================
+   FIELD ERROR
+====================================================== */
+.ferr{font-size:.75rem;color:#f87171;margin-top:.3rem;display:flex;align-items:center;gap:4px}
+
+/* ======================================================
+   TOAST
+====================================================== */
+#toast-wrap{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:9999;display:flex;flex-direction:column;gap:12px;
+  align-items:center;pointer-events:none;width:90%;max-width:370px
+}
+.toast{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 18px;border-radius:16px;
+  background:rgba(20,30,18,.95);backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 16px 40px rgba(0,0,0,.4);
+  pointer-events:auto;min-width:240px;position:relative;
+  animation:tIn .38s cubic-bezier(.34,1.56,.64,1) forwards
+}
+.toast.out{animation:tOut .3s ease forwards}
+@keyframes tIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes tOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.85)}}
+.t-prog{position:absolute;bottom:0;left:0;height:3px;border-radius:0 0 16px 16px;animation:tProg 3s linear forwards}
+@keyframes tProg{from{width:100%}to{width:0}}
+
+/* ======================================================
+   TABS
+====================================================== */
+.tab-inactive{background:none;color:rgba(255,255,255,.5)}
+.tab-active{background:linear-gradient(135deg,#8BC34A,#FF9800);color:#fff}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOAST CONTAINER
+============================================================ -->
+<div id="toast-wrap"></div>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<header id="navbar">
+  <nav class="max-w-7xl mx-auto px-4 md:px-8 py-1 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2.5 group">
+      <img src="data:image/png;base64,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"
+           alt="Giải Khát Station" class="h-28 w-28 object-contain group-hover:scale-105 transition-transform rounded-2xl" />
+      <div class="leading-none ml-3">
+        <div class="font-black text-white" style="font-size:2rem;letter-spacing:-.5px;line-height:1.15">GIẢI KHÁT</div>
+        <div class="font-black tracking-widest" style="font-size:1.2rem;color:#8BC34A;letter-spacing:.25em;line-height:1.4">STATION</div>
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-8">
+      <li><a href="#home" class="nav-link active">Trang Chủ</a></li>
+      <li><a href="#products" class="nav-link">Sản Phẩm</a></li>
+      <li><a href="giaikhatstationfeedback.html" class="nav-link" target="_blank">Phản Hồi 💬</a></li>
+      <li><a href="#contact" class="nav-link">Liên Hệ</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3">
+      <!-- Cart -->
+      <button onclick="openCart()" class="relative w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-white/10 transition-all group">
+        <i class="fas fa-shopping-cart text-white group-hover:text-[#8BC34A] transition-colors"></i>
+        <span id="cart-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[11px] font-bold items-center justify-center text-white"
+              style="background:#FF9800;display:none"></span>
+      </button>
+      <!-- Auth -->
+      <div id="auth-area">
+        <button onclick="openAuth('login')" class="btn-ghost px-4 py-2 rounded-xl text-sm hidden md:flex">
+          <i class="fas fa-user mr-2"></i> Đăng Nhập
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <button onclick="toggleMob()" class="md:hidden w-10 h-10 glass rounded-xl flex items-center justify-center">
+        <i class="fas fa-bars text-white"></i>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile menu -->
+  <div id="mob-menu" class="hidden md:hidden border-t border-white/10 px-4 py-4" style="background:rgba(11,18,9,.9);backdrop-filter:blur(20px)">
+    <div class="space-y-3">
+      <a href="#home"     class="nav-link block py-2" onclick="toggleMob()">Trang Chủ</a>
+      <a href="#products" class="nav-link block py-2" onclick="toggleMob()">Sản Phẩm</a>
+      <a href="giaikhatstationfeedback.html" class="nav-link block py-2" target="_blank" onclick="toggleMob()">Phản Hồi 💬</a>
+      <a href="#contact"  class="nav-link block py-2" onclick="toggleMob()">Liên Hệ</a>
+      <button onclick="openAuth('login');toggleMob()" class="btn-ghost px-4 py-2 rounded-xl text-sm flex">
+        <i class="fas fa-user mr-2"></i> Đăng Nhập
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO SECTION
+============================================================ -->
+<section id="home" class="hero-bg relative">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="orb" style="width:450px;height:450px;background:rgba(139,195,74,.12);top:-80px;right:-60px"></div>
+    <div class="orb" style="width:300px;height:300px;background:rgba(255,152,0,.09);bottom:10%;left:5%;animation-delay:4s"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-12 grid md:grid-cols-2 gap-12 items-center">
+    <!-- Text -->
+    <div>
+      <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium mb-6" style="color:#8BC34A;border-color:rgba(139,195,74,.25)" data-aos="fade-down">
+        <span class="w-2 h-2 rounded-full animate-pulse" style="background:#8BC34A"></span>
+        Giao hàng nhanh – 30 phút ⚡
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black leading-tight mb-5" data-aos="fade-up" data-aos-delay="80">
+        Giải Khát<br/>
+        <span class="gradient-text">Sảng Khoái</span><br/>
+        Mỗi Ngày
+      </h1>
+      <p class="text-lg leading-relaxed mb-8 max-w-md" style="color:rgba(255,255,255,.55)" data-aos="fade-up" data-aos-delay="160">
+        Matcha, Cacao, Cà Phê, Nước Cam, Sữa Đậu & Sữa Tươi –
+        <strong style="color:#fff">tươi – sạch – ngon</strong>,
+        <strong style="color:#8BC34A">chuẩn vị mỗi ngụm</strong>.
+      </p>
+      <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="240">
+        <a href="#products" class="btn-g gap-2 px-8 py-4 rounded-2xl text-base">
+          <i class="fas fa-leaf"></i> Mua Ngay
+        </a>
+        <a href="#contact" class="btn-ghost gap-2 px-8 py-4 rounded-2xl text-base">
+          <i class="fas fa-phone"></i> Gọi Đặt Hàng
+        </a>
+      </div>
+      <div class="flex gap-8 mt-10" data-aos="fade-up" data-aos-delay="320">
+        <div><div class="font-black leading-tight" style="color:#8BC34A;font-size:1.1rem">GIẢI KHÁT</div><div class="font-black" style="color:#FF9800;font-size:.85rem;margin-top:1px">TỨC THÌ ⚡</div></div>
+        <div class="w-px" style="background:rgba(255,255,255,.1)"></div>
+        <div><div class="text-2xl font-black" style="color:#8BC34A">6</div><div class="text-xs mt-0.5" style="color:rgba(255,255,255,.4)">Loại đồ uống</div></div>
+        <div class="w-px" style="background:rgba(255,255,255,.1)"></div>
+        <div><div class="text-2xl font-black" style="color:#8BC34A">Thơm Ngon</div><div class="text-xs mt-0.5" style="color:rgba(255,255,255,.4)">Đảm bảo</div></div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="relative flex justify-center" data-aos="zoom-in" data-aos-delay="180">
+      <div class="hero-glow"></div>
+      <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&h=600&fit=crop"
+           alt="Giải Khát Station" class="hero-img"
+           onerror="this.src='https://images.unsplash.com/photo-1541167760496-1628856ab772?w=600&h=600&fit=crop'"/>
+      <div class="fl-badge" style="top:8%;right:-5%;animation-delay:1s">
+        <i class="fas fa-leaf text-sm mr-1" style="color:#8BC34A"></i>
+        <span class="text-sm font-bold">Thơm Ngon</span>
+      </div>
+      <div class="fl-badge" style="bottom:12%;left:-10%;animation-delay:2.5s">
+        <i class="fas fa-clock text-sm mr-1" style="color:#8BC34A"></i>
+        <span class="text-sm font-bold">30 phút</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCTS SECTION
+============================================================ -->
+<section id="products" class="py-24 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14" data-aos="fade-up">
+      <h2 class="text-4xl md:text-5xl font-black mb-3">Thực Đơn <span class="gradient-text">Đồ Uống</span></h2>
+      <p style="color:rgba(255,255,255,.5)">Giải Khát – Sạch Sẽ – Bảo Đảm</p>
+    </div>
+    <div id="prod-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Render bằng JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEEDBACK CTA SECTION
+============================================================ -->
+<section class="py-20 px-4 md:px-8">
+  <div class="max-w-2xl mx-auto" data-aos="zoom-in">
+    <div class="relative overflow-hidden rounded-3xl p-8 md:p-12 text-center"
+         style="background:linear-gradient(135deg,rgba(139,195,74,.12) 0%,rgba(255,152,0,.1) 100%);border:1px solid rgba(139,195,74,.2);box-shadow:0 0 80px rgba(139,195,74,.08)">
+
+      <!-- Orbs trang trí -->
+      <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(139,195,74,.08);filter:blur(60px);top:-60px;right:-40px;pointer-events:none"></div>
+      <div style="position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,152,0,.06);filter:blur(50px);bottom:-40px;left:-30px;pointer-events:none"></div>
+
+      <!-- Icon -->
+      <div class="relative z-10">
+        <div class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-6 shadow-lg"
+             style="background:linear-gradient(135deg,#8BC34A,#FF9800);box-shadow:0 0 40px rgba(139,195,74,.35)">
+          <i class="fas fa-comments text-white text-3xl"></i>
+        </div>
+
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-3">
+          Chia Sẻ <span class="gradient-text">Cảm Nhận</span>
+        </h2>
+        <p class="mb-8 text-base leading-relaxed" style="color:rgba(255,255,255,.55)">
+          Bạn đã thử đồ uống của chúng tôi chưa?<br/>
+          Hãy để lại phản hồi – chúng tôi luôn lắng nghe! 💚
+        </p>
+
+        <!-- Nút bấm chính -->
+        <a href="giaikhatstationfeedback.html" target="_blank"
+           class="btn-g inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-lg font-black shadow-lg"
+           style="box-shadow:0 12px 40px rgba(139,195,74,.4)">
+          <i class="fas fa-comment-dots"></i>
+          Gửi Phản Hồi Ngay
+          <i class="fas fa-arrow-right text-sm"></i>
+        </a>
+
+        <!-- Badges nhỏ -->
+        <div class="flex items-center justify-center gap-6 mt-8 flex-wrap">
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-shield-alt" style="color:#8BC34A"></i>
+            Hoàn toàn ẩn danh
+          </div>
+          <div class="w-1 h-1 rounded-full" style="background:rgba(255,255,255,.2)"></div>
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-bolt" style="color:#FF9800"></i>
+            Gửi trong 10 giây
+          </div>
+          <div class="w-1 h-1 rounded-full" style="background:rgba(255,255,255,.2)"></div>
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(255,255,255,.5)">
+            <i class="fas fa-heart" style="color:#8BC34A"></i>
+            Chúng tôi trân trọng
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT SECTION
+============================================================ -->
+<section id="contact" class="py-24 px-4 md:px-8">
+  <div class="max-w-lg mx-auto text-center">
+    <div data-aos="fade-up">
+      <h2 class="text-4xl md:text-5xl font-black mb-3">Liên <span class="gradient-text">Hệ</span></h2>
+      <p class="mb-10" style="color:rgba(255,255,255,.5)">Gọi ngay để đặt hàng hoặc tư vấn</p>
+    </div>
+    <div class="phone-card" data-aos="zoom-in" data-aos-delay="100">
+      <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-lg"
+           style="background:linear-gradient(135deg,#8BC34A,#FF9800);box-shadow:0 0 40px rgba(139,195,74,.4)">
+        <i class="fas fa-phone text-white text-3xl"></i>
+      </div>
+      <p class="text-sm font-medium mb-2 tracking-wider uppercase" style="color:rgba(255,255,255,.4)">Hotline</p>
+      <a href="tel:0768152277" class="text-4xl md:text-5xl font-black gradient-text hover:opacity-80 transition-opacity block">
+        0768 152 277
+      </a>
+      <p class="text-sm mt-3" style="color:rgba(255,255,255,.4)">Phục vụ 6:00 – 22:00 hàng ngày</p>
+      <a href="tel:0768152277" class="btn-g gap-3 px-10 py-4 rounded-2xl text-lg font-bold mt-8 inline-flex">
+        <i class="fas fa-phone-alt animate-pulse"></i> Gọi Ngay
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer class="py-8 px-4 border-t" style="border-color:rgba(255,255,255,.07)">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <img src="data:image/png;base64,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"
+           alt="Giải Khát Station" class="h-8 w-8 object-contain rounded-lg" />
+      <div class="leading-tight">
+        <div class="text-sm font-black text-white">GIẢI KHÁT</div>
+        <div class="text-[9px] font-bold tracking-widest" style="color:#8BC34A">STATION</div>
+      </div>
+    </div>
+    <p class="text-sm text-center" style="color:rgba(255,255,255,.3)">© 2026 Giải Khát Station. Tươi ngon – Giao nhanh – Tận tâm.</p>
+    <a href="tel:0768152277" class="text-sm hover:text-[#8BC34A] transition-colors" style="color:rgba(255,255,255,.3)">0768 152 277</a>
+  </div>
+</footer>
+
+<!-- ============================================================
+     CART SIDEBAR
+============================================================ -->
+<div id="cart-ov" class="hidden" onclick="closeCart()"></div>
+<div id="cart-side">
+  <div class="flex items-center justify-between p-5 border-b" style="border-color:rgba(255,255,255,.08)">
+    <h2 class="text-lg font-bold flex items-center gap-2">
+      <i class="fas fa-shopping-cart" style="color:#8BC34A"></i> Giỏ Hàng
+    </h2>
+    <button onclick="closeCart()" class="w-9 h-9 glass rounded-xl flex items-center justify-center hover:bg-red-500/20 transition-colors">
+      <i class="fas fa-times" style="color:rgba(255,255,255,.5)"></i>
+    </button>
+  </div>
+
+  <div id="cart-list" class="flex-1 overflow-y-auto p-4 space-y-3">
+    <div id="cart-empty" class="flex flex-col items-center justify-center py-16 gap-4 text-center">
+      <div class="w-16 h-16 glass rounded-full flex items-center justify-center">
+        <i class="fas fa-shopping-basket text-2xl" style="color:rgba(255,255,255,.2)"></i>
+      </div>
+      <div>
+        <p class="font-medium" style="color:rgba(255,255,255,.5)">Giỏ hàng trống</p>
+        <p class="text-sm mt-1" style="color:rgba(255,255,255,.3)">Thêm đồ uống nhé!</p>
+      </div>
+      <button onclick="closeCart()" class="btn-g px-5 py-2.5 rounded-xl text-sm">Xem sản phẩm</button>
+    </div>
+  </div>
+
+  <div id="cart-foot" class="hidden border-t p-5 space-y-3" style="border-color:rgba(255,255,255,.08)">
+    <div class="flex justify-between items-center">
+      <span style="color:rgba(255,255,255,.5)">Tổng cộng:</span>
+      <span id="cart-total" class="text-2xl font-black" style="color:#FF9800"></span>
+    </div>
+    <button onclick="clearCart()" class="w-full py-2.5 rounded-xl text-sm border transition-colors"
+            style="border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.4);background:none">
+      <i class="fas fa-trash mr-2"></i> Dọn sạch giỏ
+    </button>
+    <button onclick="openCheckout()" class="btn-g w-full py-4 rounded-2xl text-base font-bold gap-2">
+      <i class="fas fa-credit-card"></i> Đặt Hàng
+    </button>
+  </div>
+</div>
+
+<!-- ============================================================
+     PRODUCT DETAIL MODAL
+============================================================ -->
+<div id="pm-ov" class="modal-ov" onclick="if(event.target===this)closePM()">
+  <div class="modal-box">
+    <div class="relative">
+      <img id="pm-img" src="" alt="" class="w-full h-52 object-cover rounded-t-3xl"/>
+      <button onclick="closePM()" class="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center"
+              style="background:rgba(0,0,0,.55);backdrop-filter:blur(8px)">
+        <i class="fas fa-times text-white text-sm"></i>
+      </button>
+    </div>
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-2">
+        <h2 id="pm-name" class="text-xl font-black"></h2>
+
+      </div>
+      <p id="pm-desc"  class="text-sm leading-relaxed mb-1" style="color:rgba(255,255,255,.55)"></p>
+      <p id="pm-ingr"  class="text-xs mb-1" style="color:rgba(255,255,255,.4)"></p>
+      <p id="pm-vol"   class="text-xs mb-5" style="color:rgba(255,255,255,.4)"></p>
+
+      <!-- Size -->
+      <div class="mb-5">
+        <label class="block text-xs font-semibold mb-2" style="color:rgba(255,255,255,.6)">Chọn kích cỡ</label>
+        <div class="flex gap-2">
+          <button onclick="selSz('M')" class="sz-btn active" data-sz="M">M<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">500ml</span></button>
+          <button onclick="selSz('L')" class="sz-btn" data-sz="L">L<br/><span class="text-[11px] font-normal" style="color:rgba(255,255,255,.4)">700ml</span></button>
+        </div>
+      </div>
+
+      <!-- Qty & price -->
+      <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center gap-3">
+          <button onclick="changePQ(-1)" class="qty-btn text-lg">−</button>
+          <span id="pm-qty" class="text-xl font-bold w-7 text-center">1</span>
+          <button onclick="changePQ(1)"  class="qty-btn text-lg">+</button>
+        </div>
+        <div class="text-right">
+          <div class="text-xs mb-0.5" style="color:rgba(255,255,255,.4)">Thành tiền</div>
+          <div id="pm-price" class="text-2xl font-black" style="color:#FF9800"></div>
+        </div>
+      </div>
+
+      <button onclick="addPMToCart()" class="btn-g w-full py-4 rounded-2xl text-base font-bold gap-2">
+        <i class="fas fa-cart-plus"></i> Thêm Vào Giỏ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CHECKOUT MODAL
+============================================================ -->
+<div id="co-ov" class="modal-ov" onclick="if(event.target===this)closeCO()">
+  <div class="modal-box">
+    <div class="flex items-center justify-between p-5 border-b" style="border-color:rgba(255,255,255,.08)">
+      <h2 class="text-lg font-bold flex items-center gap-2">
+        <i class="fas fa-receipt" style="color:#8BC34A"></i> Xác Nhận Đơn Hàng
+      </h2>
+      <button onclick="closeCO()" class="w-9 h-9 glass rounded-xl flex items-center justify-center">
+        <i class="fas fa-times" style="color:rgba(255,255,255,.4)"></i>
+      </button>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Họ tên *</label>
+        <input id="co-name" type="text" class="gk-in" placeholder="Nguyễn Văn A" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Số điện thoại *</label>
+        <input id="co-phone" type="tel" class="gk-in" placeholder="09xxxxxxxx" />
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Địa chỉ giao hàng *</label>
+        <input id="co-addr" type="text" class="gk-in" placeholder="123 Đường ABC, Quận 1, TP.HCM" />
+      </div>
+      <div class="glass rounded-2xl p-4">
+        <p class="text-xs font-semibold mb-2 tracking-wider uppercase" style="color:rgba(255,255,255,.4)">Đơn hàng</p>
+        <div id="co-items" class="space-y-1 max-h-32 overflow-y-auto mb-3"></div>
+        <div class="flex justify-between font-bold border-t pt-3" style="border-color:rgba(255,255,255,.08)">
+          <span>Tổng tiền:</span>
+          <span id="co-total" class="text-lg" style="color:#FF9800"></span>
+        </div>
+      </div>
+      <button id="co-btn" onclick="placeOrder()" class="btn-g w-full py-4 rounded-2xl text-base font-bold gap-2">
+        <i class="fas fa-check-circle"></i> Xác Nhận Đặt Hàng
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     AUTH MODAL (Đăng nhập / Đăng ký)
+============================================================ -->
+<div id="auth-ov" onclick="if(event.target===this)closeAuth()">
+  <div class="auth-box">
+    <!-- Logo -->
+    <div class="flex justify-center mb-5">
+      <div class="flex items-center gap-2">
+        <img src="data:image/png;base64,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"
+             alt="Giải Khát Station" class="h-9 w-9 object-contain rounded-xl" />
+        <div class="leading-tight">
+          <div class="text-sm font-black text-white">GIẢI KHÁT</div>
+          <div class="text-[9px] font-bold tracking-widest" style="color:#8BC34A">STATION</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex p-1 rounded-2xl mb-6" style="background:rgba(255,255,255,.06)">
+      <button id="tab-l" onclick="switchTab('login')"
+        class="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-active">
+        Đăng Nhập
+      </button>
+      <button id="tab-r" onclick="switchTab('register')"
+        class="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-inactive">
+        Đăng Ký
+      </button>
+    </div>
+
+    <!-- Firebase Config Warning -->
+    <div id="cfg-warn" class="hidden mb-4 p-3 rounded-xl text-xs" style="background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.35);color:#FFA726">
+      <i class="fas fa-exclamation-triangle mr-1"></i>
+      <strong>Firebase chưa cấu hình!</strong> Thay <code>YOUR_API_KEY</code> trong phần &lt;script&gt; cuối file bằng thông tin Firebase thật của bạn.
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="frm-l" class="space-y-4">
+      <h2 class="text-xl font-black mb-1">Chào trở lại!</h2>
+      <p class="text-sm mb-4" style="color:rgba(255,255,255,.45)">Đăng nhập để đặt đồ uống.</p>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Email</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-envelope"></i></span>
+          <input id="l-email" type="email" autocomplete="email" class="gk-in pl-9" placeholder="email@gmail.com"/>
+        </div>
+        <p id="l-em-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Mật khẩu</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-lock"></i></span>
+          <input id="l-pass" type="password" autocomplete="current-password" class="gk-in pl-9 pr-10" placeholder="Mật khẩu"/>
+          <button type="button" class="eye-btn" onclick="toggleEye('l-pass',this)"><i class="fas fa-eye"></i></button>
+        </div>
+        <p id="l-pw-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <button onclick="doLogin()" id="l-btn" class="btn-g w-full py-3.5 rounded-2xl text-sm font-bold gap-2 mt-1">
+        <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+      </button>
+      <p class="text-center text-sm" style="color:rgba(255,255,255,.4)">
+        Chưa có tài khoản?
+        <button onclick="switchTab('register')" class="font-semibold" style="background:none;border:none;cursor:pointer;color:#8BC34A">Đăng ký</button>
+      </p>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="frm-r" class="hidden space-y-3">
+      <h2 class="text-xl font-black mb-1">Tạo tài khoản</h2>
+      <p class="text-sm mb-4" style="color:rgba(255,255,255,.45)">Đăng ký để thưởng thức đồ uống ngon!</p>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Họ tên</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-user"></i></span>
+          <input id="r-name" type="text" autocomplete="name" class="gk-in pl-9" placeholder="Nguyễn Văn A"/>
+        </div>
+        <p id="r-nm-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Email</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-envelope"></i></span>
+          <input id="r-email" type="email" autocomplete="email" class="gk-in pl-9" placeholder="email@gmail.com"/>
+        </div>
+        <p id="r-em-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Mật khẩu</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-lock"></i></span>
+          <input id="r-pass" type="password" autocomplete="new-password" class="gk-in pl-9 pr-10" placeholder="Tối thiểu 6 ký tự"/>
+          <button type="button" class="eye-btn" onclick="toggleEye('r-pass',this)"><i class="fas fa-eye"></i></button>
+        </div>
+        <p id="r-pw-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold mb-1.5" style="color:rgba(255,255,255,.6)">Xác nhận mật khẩu</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style="color:rgba(255,255,255,.3)"><i class="fas fa-lock"></i></span>
+          <input id="r-conf" type="password" autocomplete="new-password" class="gk-in pl-9 pr-10" placeholder="Nhập lại mật khẩu"/>
+          <button type="button" class="eye-btn" onclick="toggleEye('r-conf',this)"><i class="fas fa-eye"></i></button>
+        </div>
+        <p id="r-cf-err" class="ferr hidden"><i class="fas fa-exclamation-circle"></i><span></span></p>
+      </div>
+      <button onclick="doRegister()" id="r-btn" class="btn-g w-full py-3.5 rounded-2xl text-sm font-bold gap-2 mt-1">
+        <i class="fas fa-user-plus"></i> Đăng Ký
+      </button>
+      <p class="text-center text-sm" style="color:rgba(255,255,255,.4)">
+        Đã có tài khoản?
+        <button onclick="switchTab('login')" class="font-semibold" style="background:none;border:none;cursor:pointer;color:#8BC34A">Đăng nhập</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FIREBASE SDK  (PHẢI ĐỂ TRƯỚC config)
+============================================================ -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+/* ==============================================================
+   ★★★ BƯỚC DUY NHẤT CẦN LÀM: THAY THÔNG TIN FIREBASE ★★★
+   1. Vào https://console.firebase.google.com
+   2. Tạo project → Project Settings → Your apps → Web (</>)
+   3. Copy firebaseConfig → dán vào đây
+   4. Bật Authentication → Email/Password
+   5. Tạo Firestore Database
+================================================================ */
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBuCLyl6W-mTp_P1ML-daoWqsVP0gWP4UI",
+
+  authDomain: "giaikhatstaton.firebaseapp.com",
+
+  projectId: "giaikhatstaton",
+
+  storageBucket: "giaikhatstaton.firebasestorage.app",
+
+  messagingSenderId: "292568980848",
+
+  appId: "1:292568980848:web:7a6fa596a321c5478943b5",
+
+  measurementId: "G-DG9LQLGZS0"
+
+};
+
+
+/* -------- Khởi tạo Firebase -------- */
+let auth, db, FB_OK = false;
+try {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db   = firebase.firestore();
+  FB_OK = firebaseConfig.apiKey !== 'YOUR_API_KEY';
+  if (!FB_OK) document.getElementById('cfg-warn').classList.remove('hidden');
+} catch(e) {
+  console.error('Firebase init error:', e);
+}
+
+/* -------- Helpers -------- */
+function nowGMT7() {
+  const d = new Date(Date.now() + 7*3600000);
+  const p = n => String(n).padStart(2,'0');
+  return `${d.getUTCFullYear()}-${p(d.getUTCMonth()+1)}-${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())} GMT+7`;
+}
+const fmtVND = n => Number(n).toLocaleString('vi-VN') + '₫';
+const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ==============================================================
+   TOAST
+================================================================ */
+function showToast(type, title, msg='') {
+  const wrap = document.getElementById('toast-wrap');
+  const colors = {
+    success:{bg:'rgba(139,195,74,.18)',b:'rgba(139,195,74,.4)',ic:'#8BC34A',i:'fa-check-circle'},
+    error:  {bg:'rgba(244,67,54,.18)', b:'rgba(244,67,54,.4)', ic:'#f44336',i:'fa-times-circle'},
+    warning:{bg:'rgba(255,152,0,.18)', b:'rgba(255,152,0,.4)', ic:'#FF9800',i:'fa-exclamation-triangle'},
+    info:   {bg:'rgba(255,255,255,.08)',b:'rgba(255,255,255,.2)',ic:'#AED581',i:'fa-info-circle'},
+  };
+  const c = colors[type]||colors.info;
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.style.cssText = `background:${c.bg};border-color:${c.b}`;
+  t.innerHTML = `
+    <i class="fas ${c.i}" style="color:${c.ic};font-size:1.15rem;flex-shrink:0;margin-top:1px"></i>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:.88rem">${esc(title)}</div>
+      ${msg?`<div style="font-size:.77rem;color:rgba(255,255,255,.55);margin-top:2px">${esc(msg)}</div>`:''}
+    </div>
+    <button onclick="this.closest('.toast').remove()" style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.8rem;flex-shrink:0;padding:2px">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="t-prog" style="background:${c.ic}"></div>`;
+  wrap.prepend(t);
+  let tm = setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),310)},3200);
+  t.addEventListener('mouseenter',()=>clearTimeout(tm));
+  t.addEventListener('mouseleave',()=>{tm=setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),310)},1800)});
+}
+const toast = {
+  success:(t,m)=>showToast('success',t,m),
+  error:(t,m)=>showToast('error',t,m),
+  warning:(t,m)=>showToast('warning',t,m),
+  info:(t,m)=>showToast('info',t,m),
+};
+
+/* ==============================================================
+   FIREBASE ERROR → TIẾNG VIỆT
+================================================================ */
+function fbErr(code, message) {
+  console.error('[Firebase]', code, message);
+  const map = {
+    'auth/email-already-in-use':     'Email này đã được đăng ký. Vui lòng đăng nhập.',
+    'auth/invalid-email':             'Định dạng email không hợp lệ.',
+    'auth/user-not-found':            'Không tìm thấy tài khoản với email này.',
+    'auth/wrong-password':            'Mật khẩu không đúng.',
+    'auth/invalid-credential':        'Email hoặc mật khẩu không đúng.',
+    'auth/invalid-login-credentials': 'Email hoặc mật khẩu không đúng.',
+    'auth/weak-password':             'Mật khẩu quá yếu (tối thiểu 6 ký tự).',
+    'auth/too-many-requests':         'Quá nhiều lần thử. Vui lòng đợi vài phút.',
+    'auth/network-request-failed':    'Lỗi mạng. Kiểm tra kết nối internet.',
+    'auth/operation-not-allowed':     'Email/Password chưa được bật trong Firebase Console. Xem hướng dẫn bên dưới.',
+    'auth/configuration-not-found':   'Firebase chưa được cấu hình. Thay YOUR_API_KEY trong file.',
+    'auth/api-key-not-valid':         'API Key không hợp lệ. Kiểm tra lại firebaseConfig.',
+    'auth/app-not-authorized':        'Domain này chưa được phép. Thêm vào Authorized Domains trong Firebase.',
+  };
+  return map[code] || `Lỗi [${code||'unknown'}]: ${message||'Không xác định. Nhấn F12 xem Console.'}`;
+}
+
+/* ==============================================================
+   PRODUCTS DATA
+================================================================ */
+const PRODUCTS = [
+  {id:1,name:'Matcha Latte',short:'Matcha Nhật Bản cao cấp, béo ngậy, thanh mát.',
+   long:'Matcha latte từ bột matcha Nhật Bản grade premium, pha cùng sữa tươi Anchor theo tỷ lệ vàng. Hương thơm nhẹ đắng đặc trưng, dịu ngọt tự nhiên.',
+   ingr:'🍵 Bột matcha Nhật Bản, sữa tươi, đường mía, đá viên',
+   vol:'M – 500ml  |  L – 700ml',price:45000,
+   img:'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=500&h=350&fit=crop',
+   rating:4.9,reviews:328,badge:'Bán chạy'},
+  {id:2,name:'Cacao Nóng',short:'Cacao nguyên chất đậm đà, thêm kem tươi phủ trên.',
+   long:'Cacao 100% nhập từ Ivory Coast, kết hợp sữa nguyên kem và vanilla. Lớp whipping cream phủ trên cùng tạo cảm giác béo ngậy ấm lòng.',
+   ingr:'🍫 Bột cacao 100%, sữa nguyên kem, vanilla, whipping cream',
+   vol:'M – 500ml  |  L – 700ml',price:42000,
+   img:'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=500&h=350&fit=crop',
+   rating:4.8,reviews:215,badge:'Mới'},
+  {id:3,name:'Cà Phê Sữa Đá',short:'Phin truyền thống, sữa đặc Ông Thọ, đá trong.',
+   long:'Robusta Buôn Ma Thuột + Arabica Cầu Đất pha phin tỷ lệ độc quyền. Sữa đặc Ông Thọ nguyên bản, đá viên trong suốt – đúng chuẩn cà phê Việt.',
+   ingr:'☕ Robusta + Arabica, sữa đặc, đá viên',
+   vol:'M – 500ml  |  L – 700ml',price:35000,
+   img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&h=350&fit=crop',
+   rating:4.7,reviews:512,badge:'Phổ biến'},
+  {id:4,name:'Nước Cam Tươi',short:'Cam Sành Vĩnh Long vắt tươi 100%, không đường.',
+   long:'Cam Sành miền Tây vắt ngay tại chỗ, không pha loãng, không đường, không bảo quản. Một ly đủ vitamin C cho cả ngày – thuần tự nhiên.',
+   ingr:'🍊 Cam Sành tươi 100%, không đường, không bảo quản',
+   vol:'M – 500ml  |  L – 700ml',price:38000,
+   img:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=500&h=350&fit=crop',
+   rating:4.9,reviews:401,badge:'Tươi 100%'},
+  {id:5,name:'Sữa Đậu Nành',short:'Đậu nành rang vàng, xay mịn, thơm bùi béo ngậy.',
+   long:'Đậu nành hạt vàng ngâm đêm, rang vàng nhẹ trước khi xay – kỹ thuật rang tạo hương thơm bùi đặc biệt. Không bảo quản, đường phèn vừa phải.',
+   ingr:'🫘 Đậu nành hạt, đường phèn, nước lọc',
+   vol:'M – 500ml  |  L – 700ml',price:28000,
+   img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&h=350&fit=crop',
+   rating:4.6,reviews:187,badge:'Lành mạnh'},
+  {id:6,name:'Sữa Tươi Nguyên Chất',short:'Vinamilk nguyên chất, giàu canxi, phục vụ lạnh/nóng.',
+   long:'Sữa tươi thanh trùng Vinamilk 100%, không pha loãng. Phục vụ lạnh hoặc nóng theo yêu cầu. Nguồn canxi và protein thiết yếu cho cả gia đình.',
+   ingr:'🥛 Sữa tươi Vinamilk 100%',
+   vol:'M – 500ml  |  L – 700ml',price:30000,
+   img:'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&h=350&fit=crop',
+   rating:4.7,reviews:263,badge:'Dinh dưỡng'},
+];
+
+function renderProducts() {
+  const g = document.getElementById('prod-grid');
+  if (!g) return;
+  g.innerHTML = PRODUCTS.map((p,i) => `
+    <div class="prod-card" data-aos="fade-up" data-aos-delay="${(i%3)*90}" onclick="openPM(${p.id})">
+      <div class="overflow-hidden relative">
+        <img src="${p.img}" alt="${esc(p.name)}" class="prod-img" loading="lazy"
+             onerror="this.src='https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&h=350&fit=crop'"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.4),transparent)"></div>
+      </div>
+      <div class="p-5 relative" style="z-index:10">
+        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-2" style="background:rgba(139,195,74,.18);border:1px solid rgba(139,195,74,.35);color:#8BC34A">${esc(p.badge)}</span>
+        <div class="font-bold text-white mb-1" style="font-size:1.05rem">${esc(p.name)}</div>
+        <div class="text-sm mb-3 leading-relaxed" style="color:rgba(255,255,255,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(p.short)}</div>
+        <div class="flex items-center justify-between">
+          <div>
+            <div style="line-height:1.3">
+              <div style="font-size:.72rem;color:rgba(255,255,255,.45);font-weight:500;margin-bottom:2px">Chọn size để đặt</div>
+              <div style="display:flex;align-items:baseline;gap:8px">
+                <span style="font-weight:800;font-size:1rem;color:#FF9800">${fmtVND(calcPrice(p.price,'M',p.id))}</span>
+                <span style="font-size:.72rem;color:rgba(255,255,255,.35);font-weight:500">M</span>
+                <span style="font-size:.8rem;color:rgba(255,255,255,.2)">|</span>
+                <span style="font-weight:700;font-size:.9rem;color:#FFA726">${fmtVND(calcPrice(p.price,'L',p.id))}</span>
+                <span style="font-size:.72rem;color:rgba(255,255,255,.35);font-weight:500">L</span>
+              </div>
+            </div>
+          </div>
+          <button class="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+                  style="background:linear-gradient(135deg,#8BC34A,#FF9800)"
+                  onclick="event.stopPropagation();quickAdd(${p.id})">
+            <i class="fas fa-plus text-white text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+  if(window.AOS) AOS.refresh();
+}
+
+/* ==============================================================
+   PRODUCT MODAL
+================================================================ */
+let pmP=null, pmSz='S', pmQty=1;
+
+function openPM(id) {
+  pmP = PRODUCTS.find(x=>x.id===id); if(!pmP) return;
+  pmSz='M'; pmQty=1;
+  document.getElementById('pm-img').src   = pmP.img;
+  document.getElementById('pm-name').textContent = pmP.name;
+  document.getElementById('pm-desc').textContent = pmP.long;
+  document.getElementById('pm-ingr').textContent = pmP.ingr;
+  document.getElementById('pm-vol').textContent  = '📏 ' + pmP.vol;
+  document.getElementById('pm-qty').textContent = '1';
+  resetSz(); updPMPrice();
+  document.getElementById('pm-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePM() { document.getElementById('pm-ov').classList.remove('open'); document.body.style.overflow=''; }
+function selSz(s) { pmSz=s; resetSz(); document.querySelector(`.sz-btn[data-sz="${s}"]`).classList.add('active'); updPMPrice(); }
+function resetSz() { document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active')); }
+function changePQ(d) { pmQty=Math.max(1,pmQty+d); document.getElementById('pm-qty').textContent=pmQty; updPMPrice(); }
+function calcPrice(base,sz,pid) {
+  // Sữa Đậu Nành (id=5): M=10000đ, L=15000đ
+  if(pid===5) return sz==='M' ? 10000 : 15000;
+  // Tất cả còn lại: M=20000đ, L=25000đ
+  return sz==='M' ? 20000 : 25000;
+}
+function updPMPrice() { if(!pmP) return; document.getElementById('pm-price').textContent=fmtVND(calcPrice(pmP.price,pmSz,pmP.id)*pmQty); }
+function addPMToCart() { if(!pmP) return; addToCart(pmP,pmSz,pmQty); closePM(); }
+function quickAdd(id) { const p=PRODUCTS.find(x=>x.id===id); if(p) addToCart(p,'M',1); }
+
+/* ==============================================================
+   CART
+================================================================ */
+let cart = JSON.parse(localStorage.getItem('gk_cart')||'[]');
+
+function saveCart() {
+  localStorage.setItem('gk_cart',JSON.stringify(cart));
+  updBadge(); renderCart();
+}
+function updBadge() {
+  const b=document.getElementById('cart-badge');
+  const n=cart.reduce((s,i)=>s+i.qty,0);
+  b.textContent=n; b.style.display=n>0?'flex':'none';
+}
+function addToCart(p,sz,qty=1) {
+  const up=calcPrice(p.price,sz,p.id);
+  const ex=cart.find(i=>i.id===p.id&&i.size===sz);
+  if(ex) ex.qty+=qty; else cart.push({id:p.id,name:p.name,img:p.img,size:sz,up,qty});
+  saveCart();
+  toast.success('Đã thêm vào giỏ!',`${p.name} – Size ${sz}`);
+}
+function updateQty(id,sz,d) {
+  const it=cart.find(i=>i.id===id&&i.size===sz); if(!it) return;
+  it.qty+=d;
+  if(it.qty<=0){cart=cart.filter(i=>!(i.id===id&&i.size===sz));saveCart();toast.warning('Đã xóa',it.name);}
+  else saveCart();
+}
+function removeItem(id,sz) {
+  const nm=cart.find(i=>i.id===id&&i.size===sz)?.name||'';
+  cart=cart.filter(i=>!(i.id===id&&i.size===sz));
+  saveCart(); toast.warning('Đã xóa',nm);
+}
+function clearCart() { if(!cart.length)return; cart=[]; saveCart(); toast.info('Đã dọn sạch giỏ hàng'); }
+function cartTotal() { return cart.reduce((s,i)=>s+i.up*i.qty,0); }
+
+function renderCart() {
+  const list=document.getElementById('cart-list');
+  const empty=document.getElementById('cart-empty');
+  const foot=document.getElementById('cart-foot');
+  if(!list) return;
+  list.querySelectorAll('.ci').forEach(e=>e.remove());
+  if(!cart.length){empty.classList.remove('hidden');foot.classList.add('hidden');return;}
+  empty.classList.add('hidden'); foot.classList.remove('hidden');
+  cart.forEach(item=>{
+    const d=document.createElement('div');
+    d.className='ci flex gap-3 items-center p-3 rounded-2xl';
+    d.style.cssText='background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)';
+    d.innerHTML=`
+      <img src="${esc(item.img)}" alt="${esc(item.name)}" class="w-14 h-14 rounded-xl object-cover flex-shrink-0"
+           onerror="this.src='https://images.unsplash.com/photo-1541167760496-1628856ab772?w=100&h=100&fit=crop'"/>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-white text-sm truncate">${esc(item.name)}</div>
+        <div class="text-xs mt-0.5" style="color:rgba(255,255,255,.4)">Size ${esc(item.size)} · ${fmtVND(item.up)}</div>
+      </div>
+      <div class="flex flex-col items-end gap-1.5">
+        <div class="flex items-center gap-1.5">
+          <button onclick="updateQty(${item.id},'${item.size}',-1)" class="qty-btn">−</button>
+          <span class="text-sm font-bold w-5 text-center">${item.qty}</span>
+          <button onclick="updateQty(${item.id},'${item.size}',1)"  class="qty-btn">+</button>
+        </div>
+        <div class="text-xs font-bold" style="color:#FF9800">${fmtVND(item.up*item.qty)}</div>
+        <button onclick="removeItem(${item.id},'${item.size}')" style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:.8rem;padding:2px" class="hover:text-red-400 transition-colors">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>`;
+    list.appendChild(d);
+  });
+  document.getElementById('cart-total').textContent=fmtVND(cartTotal());
+}
+
+function openCart() {
+  document.getElementById('cart-side').classList.add('open');
+  document.getElementById('cart-ov').classList.remove('hidden');
+  document.body.style.overflow='hidden'; renderCart();
+}
+function closeCart() {
+  document.getElementById('cart-side').classList.remove('open');
+  document.getElementById('cart-ov').classList.add('hidden');
+  document.body.style.overflow='';
+}
+
+/* ==============================================================
+   CHECKOUT
+================================================================ */
+function openCheckout() {
+  if(!cart.length){toast.warning('Giỏ trống!','Thêm sản phẩm trước nhé.');return;}
+  if(!FB_OK){toast.error('Firebase chưa cấu hình!','Thay YOUR_API_KEY trong file HTML.');return;}
+  if(!auth?.currentUser){toast.info('Vui lòng đăng nhập','Bạn cần đăng nhập để đặt hàng.');openAuth('login');return;}
+  document.getElementById('co-items').innerHTML=cart.map(i=>
+    `<div class="flex justify-between text-sm" style="color:rgba(255,255,255,.6)">
+       <span>${esc(i.name)} <span style="color:rgba(255,255,255,.35)">×${i.qty} Size ${i.size}</span></span>
+       <span style="color:#FF9800;font-weight:600">${fmtVND(i.up*i.qty)}</span>
+     </div>`).join('');
+  document.getElementById('co-total').textContent=fmtVND(cartTotal());
+  const u=auth.currentUser;
+  if(u?.displayName) document.getElementById('co-name').value=u.displayName;
+  closeCart();
+  document.getElementById('co-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCO() { document.getElementById('co-ov').classList.remove('open'); document.body.style.overflow=''; }
+
+async function placeOrder() {
+  const name=document.getElementById('co-name').value.trim();
+  const phone=document.getElementById('co-phone').value.trim();
+  const addr=document.getElementById('co-addr').value.trim();
+  if(!name||!phone||!addr){toast.error('Thiếu thông tin!','Vui lòng điền đủ.');return;}
+  if(!/^0\d{9}$/.test(phone)){toast.error('SĐT không hợp lệ!','Nhập đúng 10 số bắt đầu 0.');return;}
+  const btn=document.getElementById('co-btn');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i> Đang xử lý...';
+  try {
+    await db.collection('orders').add({
+      userId:auth.currentUser?.uid||null,
+      customerName:name, phoneNumber:phone, address:addr,
+      products:cart.map(i=>({name:i.name,size:i.size,qty:i.qty,unitPrice:i.up,subtotal:i.up*i.qty})),
+      totalPrice:cartTotal(), orderTime:nowGMT7(), status:'pending',
+      createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    cart=[]; saveCart(); closeCO();
+    toast.success('Đặt hàng thành công! 🎉','Giao hàng trong 30 phút.');
+  } catch(e) {
+    toast.error('Lỗi đặt hàng!',e.message);
+  } finally {
+    btn.disabled=false; btn.innerHTML='<i class="fas fa-check-circle mr-2"></i> Xác Nhận Đặt Hàng';
+  }
+}
+
+/* ==============================================================
+   AUTH MODAL
+================================================================ */
+function openAuth(tab='login') {
+  document.getElementById('auth-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+  switchTab(tab);
+  clearAuthErrors();
+}
+function closeAuth() { document.getElementById('auth-ov').classList.remove('open'); document.body.style.overflow=''; }
+
+function switchTab(tab) {
+  const isL=tab==='login';
+  document.getElementById('frm-l').classList.toggle('hidden',!isL);
+  document.getElementById('frm-r').classList.toggle('hidden',isL);
+  const tl=document.getElementById('tab-l'), tr=document.getElementById('tab-r');
+  if(isL){tl.className='flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-active';tr.className='flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-inactive';}
+  else   {tr.className='flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-active';tl.className='flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all tab-inactive';}
+  clearAuthErrors();
+}
+
+function clearAuthErrors() {
+  ['l-em-err','l-pw-err','r-nm-err','r-em-err','r-pw-err','r-cf-err'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.classList.add('hidden');
+  });
+}
+function showErr(id,msg) {
+  const el=document.getElementById(id); if(!el) return;
+  el.querySelector('span').textContent=msg; el.classList.remove('hidden');
+}
+function toggleEye(inputId,btn) {
+  const inp=document.getElementById(inputId), ic=btn.querySelector('i');
+  if(inp.type==='password'){inp.type='text';ic.classList.replace('fa-eye','fa-eye-slash');btn.style.color='#8BC34A';}
+  else{inp.type='password';ic.classList.replace('fa-eye-slash','fa-eye');btn.style.color='';}
+}
+
+/* ---- ĐĂNG NHẬP ---- */
+async function doLogin() {
+  if(!FB_OK){toast.error('Firebase chưa cấu hình!','Thay YOUR_API_KEY trước.');return;}
+  clearAuthErrors();
+  const email=document.getElementById('l-email').value.trim();
+  const pass=document.getElementById('l-pass').value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('l-em-err','Email không hợp lệ.');return;}
+  if(pass.length<6){showErr('l-pw-err','Mật khẩu tối thiểu 6 ký tự.');return;}
+  const btn=document.getElementById('l-btn');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i> Đang đăng nhập...';
+  try {
+    const cred=await auth.signInWithEmailAndPassword(email,pass);
+    try { await db.collection('users').doc(cred.user.uid).set({lastLogin:nowGMT7(),email},{merge:true}); } catch{}
+    toast.success('Đăng nhập thành công!','Chào mừng trở lại!');
+    closeAuth();
+  } catch(e) {
+    showErr('l-em-err',fbErr(e.code,e.message));
+  } finally {
+    btn.disabled=false; btn.innerHTML='<i class="fas fa-sign-in-alt mr-2"></i> Đăng Nhập';
+  }
+}
+
+/* ---- ĐĂNG KÝ ---- */
+async function doRegister() {
+  if(!FB_OK){toast.error('Firebase chưa cấu hình!','Thay YOUR_API_KEY trước.');return;}
+  clearAuthErrors();
+  const name=document.getElementById('r-name').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  const pass=document.getElementById('r-pass').value;
+  const conf=document.getElementById('r-conf').value;
+  let ok=true;
+  if(!name||name.length<2){showErr('r-nm-err','Họ tên tối thiểu 2 ký tự.');ok=false;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('r-em-err','Email không hợp lệ.');ok=false;}
+  if(pass.length<6){showErr('r-pw-err','Mật khẩu tối thiểu 6 ký tự.');ok=false;}
+  if(pass!==conf){showErr('r-cf-err','Mật khẩu xác nhận không khớp.');ok=false;}
+  if(!ok) return;
+  const btn=document.getElementById('r-btn');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin mr-2"></i> Đang tạo tài khoản...';
+  try {
+    /* BƯỚC 1: Tạo Auth */
+    const cred=await auth.createUserWithEmailAndPassword(email,pass);
+    const user=cred.user;
+    console.log('✅ Auth OK – UID:',user.uid);
+
+    /* BƯỚC 2: Cập nhật displayName */
+    try { await user.updateProfile({displayName:name}); } catch(e2){ console.warn('updateProfile:',e2); }
+
+    /* BƯỚC 3: Lưu vào Firestore */
+    const now=nowGMT7();
+    const data={uid:user.uid,fullName:name,email,registerTime:now,lastLogin:now,role:'user',createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+    try {
+      await db.collection('users').doc(user.uid).set(data);
+      console.log('✅ Firestore OK');
+    } catch(fsErr) {
+      console.warn('Firestore lần 1 thất bại:',fsErr.code);
+      try { await db.collection('users').doc(user.uid).set(data,{merge:true}); }
+      catch(fsErr2){ console.error('Firestore lần 2 thất bại:',fsErr2); }
+    }
+
+    toast.success('Đăng ký thành công! 🎉',`Chào mừng ${name}!`);
+    closeAuth();
+  } catch(e) {
+    console.error('Register error:',e.code,e.message);
+    const msg=fbErr(e.code,e.message);
+    if(e.code==='auth/email-already-in-use') showErr('r-em-err',msg);
+    else if(e.code==='auth/weak-password')   showErr('r-pw-err',msg);
+    else showErr('r-em-err',msg);
+  } finally {
+    btn.disabled=false; btn.innerHTML='<i class="fas fa-user-plus mr-2"></i> Đăng Ký';
+  }
+}
+
+/* ==============================================================
+   AUTH STATE OBSERVER
+================================================================ */
+if(auth) {
+  auth.onAuthStateChanged(user=>{
+    const area=document.getElementById('auth-area');
+    if(area){
+      if(user){
+        const nm=user.displayName||user.email.split('@')[0];
+        area.innerHTML=`
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                 style="background:linear-gradient(135deg,#8BC34A,#FF9800)">${esc(nm.charAt(0).toUpperCase())}</div>
+            <span class="hidden md:block text-sm font-semibold max-w-[90px] truncate">${esc(nm)}</span>
+            <button onclick="auth.signOut().then(()=>toast.info('Đã đăng xuất','Hẹn gặp lại!'))"
+                    style="background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:.8rem;padding:4px"
+                    class="hidden md:block hover:text-red-400 transition-colors">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>`;
+      } else {
+        area.innerHTML=`
+          <button onclick="openAuth('login')" class="btn-ghost px-4 py-2 rounded-xl text-sm hidden md:flex">
+            <i class="fas fa-user mr-2"></i> Đăng Nhập
+          </button>`;
+      }
+    }
+
+    } else {
+  });
+}
+
+/* ==============================================================
+   INIT
+================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  AOS.init({duration:680,once:true,offset:60,easing:'ease-out-cubic'});
+  renderProducts();
+  updBadge();
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').style.boxShadow=
+      window.scrollY>50?'0 4px 30px rgba(0,0,0,.5)':'';
+  });
+});
+
+function toggleMob(){ document.getElementById('mob-menu').classList.toggle('hidden'); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+
+
+/* ==============================================================
+   FEEDBACK SYSTEM – Lưu vào Firestore collection "feedbacks"
+================================================================ */
+
+      if (emptyEl) emptyEl.style.display = 'none';
+
+      snap.forEach(doc => {
+        const d = doc.data();
+        const bubble = createBubble(d.name, d.text, d.timeDisplay);
+        chatEl.appendChild(bubble);
+      });
+
+      // Scroll xuống cuối
+      chatEl.scrollTop = chatEl.scrollHeight;
+    });
+}
+
+      </div>
+      <div class="fb-bubble-inner">
+        <div class="fb-name">${esc(name)}</div>
+        <div class="fb-text">${esc(text).replace(/\n/g,'<br/>')}</div>
+      </div>
+    </div>
+    <div class="ml-10 fb-time">${esc(time||'')}</div>
+  `;
+  return div;
+}
+
+  const textEl = document.getElementById('fb-text');
+  const btnEl  = document.getElementById('fb-send');
+  if (!textEl) return;
+
+  // Bắt buộc đăng nhập
+  if (!auth?.currentUser) {
+    toast.warning('Vui lòng đăng nhập!', 'Bạn cần đăng nhập để gửi phản hồi.');
+    openAuth('login');
+    return;
+  }
+
+  // Lấy tên từ tài khoản đăng nhập
+  const u    = auth.currentUser;
+  const name = u.displayName || u.email.split('@')[0];
+  const text = textEl.value.trim();
+
+  if (!text) { toast.warning('Chưa có nội dung!', 'Nhập cảm nhận của bạn nhé.'); textEl.focus(); return; }
+  if (text.length < 3) { toast.warning('Quá ngắn!', 'Nhập ít nhất 3 ký tự.'); return; }
+
+  btnEl.disabled = true;
+  btnEl.innerHTML = '<i class="fas fa-spinner fa-spin text-white"></i>';
+
+  try {
+    const now = nowGMT7();
+    await db.collection('feedbacks').add({
+      name,
+      text,
+      timeDisplay: now,
+      createdAt:   firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    textEl.value = '';
+    document.getElementById('fb-char').textContent = '0 / 300';
+    textEl.style.height = 'auto';
+    toast.success('Cảm ơn bạn! 💚', 'Phản hồi đã được gửi thành công.');
+  } catch(e) {
+    console.error('Feedback error:', e);
+    toast.error('Lỗi gửi!', e.message);
+  } finally {
+    btnEl.disabled = false;
+    btnEl.innerHTML = '<i class="fas fa-paper-plane text-white"></i>';
+  }
+}
+
+// Đếm ký tự + auto-resize textarea
+document.addEventListener('DOMContentLoaded', () => {
+  const textEl = document.getElementById('fb-text');
+  const charEl = document.getElementById('fb-char');
+  if (textEl && charEl) {
+    textEl.addEventListener('input', () => {
+      const len = textEl.value.length;
+      charEl.textContent = len + ' / 300';
+      charEl.style.color = len > 270 ? '#FF9800' : 'rgba(255,255,255,.25)';
+      // Auto resize
+      textEl.style.height = 'auto';
+      textEl.style.height = Math.min(textEl.scrollHeight, 120) + 'px';
+    });
+  }
+  // Load feedbacks sau khi FB_OK được set
+
+});
+
 </script>
